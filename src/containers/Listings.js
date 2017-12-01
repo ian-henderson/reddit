@@ -3,15 +3,14 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { parse } from 'query-string'
+import Subreddit from '../components/Subreddit'
 import { loadListings } from '../actions'
 import { paramsToEndpoint } from '../utils'
 
 class Listings extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { selectedTab: null }
     this.boundActionCreators = bindActionCreators({ loadListings }, props.dispatch)
-    this.handleTabChange = this.handleTabChange.bind(this)
   }
 
   componentWillMount() {
@@ -20,16 +19,11 @@ class Listings extends React.Component {
       return this.props.history.push('/login')
     }
     // Loads listings based on the url and parameters
+    const { params } = this.props.match
     this.boundActionCreators.loadListings(Object.assign({},
-      this.props.match.params,          // url
+      params,                           // url
       parse(this.props.location.search) // parameters
     ))
-    // Sets the focused tab to the sorting slug in url
-    if (this.props.match.params.sorting) {
-      this.setState({ selectedTab: this.props.params.sorting })
-    } else {
-      this.setState({ selectedTab: 'hot' })
-    }
   }
 
   componentDidMount() {
@@ -63,22 +57,22 @@ class Listings extends React.Component {
     // If sorting changes, then load the correct listings
     const { sorting } = this.props.match.params
     if (sorting !== nextProps.match.params.sorting) {
-      this.setState({ selectedTab: nextProps.match.params.sorting })
-      this.props.loadListings(Object.assign({},
+      this.boundActionCreators.loadListings(Object.assign({},
         nextProps.match.params,
         parse(this.props.location.search)
       ))
     }
   }
 
-  handleTabChange(sorting) {
-    const newParams = Object.assign({}, this.props.params, { sorting })
-    const endpoint = paramsToEndpoint(newParams)
-    this.props.history.push(endpoint)
-  }
-
   render() {
-    return <h1>Listings</h1>
+    return (
+      <Subreddit
+        sorting={this.props.match.params.sorting}
+        subreddit={this.props.match.params.subreddit}
+        pages={this.props.pages}
+        pageData={this.props.pageData}
+      />
+    )
   }
 }
 

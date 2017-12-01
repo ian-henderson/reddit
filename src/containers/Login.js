@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { parse } from 'query-string'
+import AppBar from 'material-ui/AppBar'
 import RaisedButton from 'material-ui/RaisedButton'
 import { initializeToken } from '../actions'
 import { randomString } from '../utils'
 import PageContainer from '../components/PageContainer'
-import Nav from '../components/Nav'
 
 const styles = {
   login: {
@@ -84,7 +84,11 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <Nav />
+        <AppBar
+          title='Reddit'
+          style={{'top': '0', 'position': 'fixed'}}
+          showMenuIconButton={false}
+        />
         <PageContainer>
           <div style={styles.login}>
             <h1 style={styles.loginTitle}>Login</h1>
