@@ -11,7 +11,6 @@ import PageContainer from '../components/PageContainer'
 
 const styles = {
   login: {
-    margin: '50px auto 0',
     maxWidth: '900px'
   },
   loginTitle: {
@@ -40,8 +39,8 @@ class Login extends React.Component {
   constructor(props) {
     super(props)
     this.state = { width: null, height: null }
-    this.boundActionCreators = bindActionCreators({ initializeToken }, props.dispatch)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
+    this.boundActionCreators = bindActionCreators({ initializeToken }, props.dispatch)
   }
 
   componentWillMount() {
@@ -106,8 +105,6 @@ class Login extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
-})
+const mapStateToProps = state => ({ isAuthenticated: state.auth.isAuthenticated })
 
 export default withRouter(connect(mapStateToProps)(Login))

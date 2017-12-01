@@ -2,8 +2,9 @@ import React from 'react'
 
 const styles = {
   container: {
-    maxWidth: '1190px',
-    padding: '64px 14px 15px'
+    maxWidth: '1160px',
+    margin: 'auto',
+    padding: '144px 14px 15px'
   }
 }
 
