@@ -1,4 +1,13 @@
-export const paramsToEndpoint = params => {
+export const mySubredditsEndpoint = params => {
+  let endpoint = `/subreddits/mine/${params.where}`
+  if (params.after) {
+    endpoint += `?after=${params.after}`
+  }
+
+  return endpoint
+}
+
+export const paramsEndpoint = params => {
   let endpoint = ''
   if (params.subreddit) {
     endpoint += `/r/${params.subreddit}`

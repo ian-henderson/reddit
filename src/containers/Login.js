@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { parse } from 'query-string'
+import AppBar from 'material-ui/AppBar'
 import RaisedButton from 'material-ui/RaisedButton'
-import Nav from '../components/Nav'
 import { initializeToken } from '../actions'
 import { randomString } from '../utils'
 import PageContainer from '../components/PageContainer'
@@ -19,6 +19,10 @@ const styles = {
     fontWeight: 'bold',
     lineHeight: '32px',
     marginBottom: '10px'
+  },
+  loginAppbar: {
+    position: 'fixed',
+    top: '0'
   },
   loginButton: {
     margin: '12'
@@ -84,7 +88,11 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <Nav />
+        <AppBar
+          title='Reddit'
+          style={styles.loginAppBar}
+          showMenuIconButton={false}
+        />
         <PageContainer>
           <div style={styles.login}>
             <h1 style={styles.loginTitle}>Login</h1>

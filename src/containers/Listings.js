@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { parse } from 'query-string'
-import ListingsComponent from '../components/ListingsComponent'
-import { loadListings, loadSubreddits } from '../actions'
-import { paramsToEndpoint } from '../utils'
+import Nav from './Nav'
+import PageContainer from '../components/PageContainer'
+import { loadListings } from '../actions'
+import { paramsEndpoint } from '../utils'
 
 class Listings extends React.Component {
   constructor(props) {
@@ -19,60 +20,31 @@ class Listings extends React.Component {
       return this.props.history.push('/login')
     }
     // Loads listings based on the url and parameters
-    const { params } = this.props.match
-    this.boundActionCreators.loadListings(Object.assign({},
-      params,                           // url
-      parse(this.props.location.search) // parameters
-    ))
-    // Loads the user's subreddit list
-  }
-
-  componentDidMount() {
-    /*
-    document.addEventListener('scroll', event => {
-      /*
-       * Fetches Posts on scroll
-       *
-       * Requirements
-       * 1. The content of the page is larger than the view
-       * 2. The position on screen is less than a page length from the bottom
-
-      const { body } = event.srcElement
-      const elementLargerThanView = body.offsetHeight > window.innerHeight
-      const closeToBottom = window.scrollY > (body.offsetHeight - window.innerHeight)
-
-      if (elementLargerThanView && closeToBottom) {
-        const { pages } = this.props
-        const lastPage = pages[pages.length - 1]
-        this.props.loadListings(Object.assign({},
-          this.props.params,
-          this.props.loadListings.query,
-          { after: lastPage.after }
-        ))
-      }
-    })
-    */
+    this.boundActionCreators.loadListings(paramsEndpoint(Object.assign({},
+      this.props.match.params,
+      parse(this.props.location.search)
+    )))
   }
 
   componentWillReceiveProps(nextProps) {
     // If sorting changes, then load the correct listings
     const { sorting } = this.props.match.params
     if (sorting !== nextProps.match.params.sorting) {
-      this.boundActionCreators.loadListings(Object.assign({},
+      this.boundActionCreators.loadListings(paramsEndpoint(Object.assign({},
         nextProps.match.params,
         parse(this.props.location.search)
-      ))
+      )))
     }
   }
 
   render() {
     return (
-      <ListingsComponent
-        sorting={this.props.match.params.sorting}
-        title={this.props.match.params.subreddit || 'Home'}
-        pages={this.props.pages}
-        pageData={this.props.pageData}
-      />
+      <div>
+        <Nav />
+        <PageContainer>
+          <h1>Listings</h1>
+        </PageContainer>
+      </div>
     )
   }
 }
@@ -84,7 +56,7 @@ const mapStateToProps = (state, ownProps) => {
   } = state
   // Populates pages array.
   const pages = []
-  let endpoint = paramsToEndpoint(Object.assign({},
+  let endpoint = paramsEndpoint(Object.assign({},
     ownProps.match.params,
     parse(ownProps.location.search)
   ))
@@ -96,7 +68,7 @@ const mapStateToProps = (state, ownProps) => {
         ownProps.match.params,
         { after: page.after }
       )
-      endpoint = paramsToEndpoint(nextPageParams)
+      endpoint = paramsEndpoint(nextPageParams)
     } else {
       endpoint = null
     }

@@ -1,5 +1,4 @@
 import { CALL_API, Schemas } from '../middleware/api'
-import { paramsToEndpoint } from '../utils'
 
 export const LISTINGS_REQUEST = 'LISTINGS_REQUEST'
 export const LISTINGS_SUCCESS = 'LISTINGS_SUCCESS'
@@ -17,9 +16,7 @@ const fetchListings = endpoint => ({
   }
 })
 
-export const loadListings = params => (dispatch, getState) => {
-  const endpoint = paramsToEndpoint(params)
-
+export const loadListings = endpoint => (dispatch, getState) => {
   if (getState().pagination.listingsByEndpoint[endpoint]) {
     return null
   }
