@@ -3,15 +3,16 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { parse } from 'query-string'
-import AppBar from 'material-ui/AppBar'
 import RaisedButton from 'material-ui/RaisedButton'
+import Nav from '../components/Nav'
 import { initializeToken } from '../actions'
 import { randomString } from '../utils'
 import PageContainer from '../components/PageContainer'
 
 const styles = {
   login: {
-    maxWidth: '900px'
+    maxWidth: '900px',
+    paddingTop: '40px'
   },
   loginTitle: {
     fontSize: '27px',
@@ -83,15 +84,11 @@ class Login extends React.Component {
   render() {
     return (
       <div>
-        <AppBar
-          title='Reddit'
-          style={{'top': '0', 'position': 'fixed'}}
-          showMenuIconButton={false}
-        />
+        <Nav />
         <PageContainer>
           <div style={styles.login}>
             <h1 style={styles.loginTitle}>Login</h1>
-            <p>Connect this Reddit client with your account.</p>
+            <p>Connect this Reddit client to your account.</p>
             <RaisedButton
               label='Connect'
               style={styles.loginButton}

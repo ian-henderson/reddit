@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { parse } from 'query-string'
-import Subreddit from '../components/Subreddit'
-import { loadListings } from '../actions'
+import ListingsComponent from '../components/ListingsComponent'
+import { loadListings, loadSubreddits } from '../actions'
 import { paramsToEndpoint } from '../utils'
 
 class Listings extends React.Component {
@@ -24,6 +24,7 @@ class Listings extends React.Component {
       params,                           // url
       parse(this.props.location.search) // parameters
     ))
+    // Loads the user's subreddit list
   }
 
   componentDidMount() {
@@ -66,9 +67,9 @@ class Listings extends React.Component {
 
   render() {
     return (
-      <Subreddit
+      <ListingsComponent
         sorting={this.props.match.params.sorting}
-        subreddit={this.props.match.params.subreddit}
+        title={this.props.match.params.subreddit || 'Home'}
         pages={this.props.pages}
         pageData={this.props.pageData}
       />

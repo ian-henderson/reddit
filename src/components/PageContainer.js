@@ -4,7 +4,7 @@ const styles = {
   container: {
     maxWidth: '1160px',
     margin: 'auto',
-    padding: '144px 14px 15px'
+    padding: '79px 14px 15px'
   }
 }
 
