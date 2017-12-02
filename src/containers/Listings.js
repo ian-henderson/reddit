@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { parse } from 'query-string'
+import ListingsFeed from '../components/ListingsFeed'
+import Loading from '../components/Loading'
 import Nav from './Nav'
 import PageContainer from '../components/PageContainer'
 import { loadListings } from '../actions'
@@ -27,9 +29,8 @@ class Listings extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // If sorting changes, then load the correct listings
-    const { sorting } = this.props.match.params
-    if (sorting !== nextProps.match.params.sorting) {
+    // If params change, then reload the new page's params
+    if (this.props.match.params !== nextProps.match.params) {
       this.boundActionCreators.loadListings(paramsEndpoint(Object.assign({},
         nextProps.match.params,
         parse(this.props.location.search)
@@ -42,7 +43,13 @@ class Listings extends React.Component {
       <div>
         <Nav />
         <PageContainer>
-          <h1>Listings</h1>
+          {Object.keys(this.props.pageData).length > 0
+            ? <ListingsFeed
+                pages={this.props.pages}
+                pageData={this.props.pageData}
+              />
+            : <Loading />
+          }
         </PageContainer>
       </div>
     )

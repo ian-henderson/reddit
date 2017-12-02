@@ -9,7 +9,7 @@ const composeEnhancers = composeWithDevTools({})
 
 const configureStore = preloadedState => {
   const store = createStore(rootReducer, preloadedState, composeEnhancers(
-    applyMiddleware(thunk, token, api)
+    applyMiddleware(token, thunk, api)
   ))
 
   if (module.hot) {

@@ -1,28 +1,52 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
+import { parse } from 'query-string'
 import AppBar from 'material-ui/AppBar'
+import ContentFilter from 'material-ui/svg-icons/content/filter-list'
 import Drawer from 'material-ui/Drawer'
+import IconButton from 'material-ui/IconButton'
+import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
-import { loadListings } from '../actions'
-import { mySubredditsEndpoint } from '../utils'
+import { List, ListItem } from 'material-ui/List'
+import { paramsEndpoint } from '../utils'
+
+const styles = {
+  dropDownMenuLabel: {
+    color: 'white'
+  }
+}
 
 class Nav extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { open: false }
-    this.handleClose = this.handleClose.bind(this)
+    this.state = { open: false, sorting: null }
+    this.goTo = this.goTo.bind(this)
+    this.handleSorting = this.handleSorting.bind(this)
     this.handleToggle = this.handleToggle.bind(this)
-    this.boundActionCreators = bindActionCreators({ loadListings }, props.dispatch)
   }
 
   componentWillMount() {
-    this.boundActionCreators.loadListings('/subreddits/mine/subscriber')
+    this.setState({ sorting: this.props.match.params.sorting || 'hot' })
   }
 
-  handleClose() {
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params.sorting !== this.props.match.params.sorting) {
+      this.setState({ sorting: this.props.match.params.sorting || 'hot' })
+    }
+  }
+
+  goTo(target) {
     this.setState({ open: false })
+    this.props.history.push(target)
+  }
+
+  handleSorting(event, value) {
+    const endpoint = paramsEndpoint(Object.assign({},
+      this.props.match.params,
+      parse(this.props.location.search),
+      { sorting: value }
+    ))
+    this.goTo(endpoint)
   }
 
   handleToggle() {
@@ -38,63 +62,39 @@ class Nav extends React.Component {
           title={title}
           style={{'position': 'fixed', 'top': '0'}}
           onLeftIconButtonTouchTap={this.handleToggle}
+          iconElementRight={
+            <IconMenu
+              iconButtonElement={<IconButton><ContentFilter /></IconButton>}
+              onChange={this.handleSorting}
+              value={this.state.sorting}
+              anchorOrigin={{'vertical': 'bottom', 'horizontal': 'right'}}
+              targetOrigin={{'vertical': 'top', 'horizontal': 'right'}}
+            >
+              <MenuItem value='hot' primaryText='Hot' />
+              <MenuItem value='new' primaryText='New' />
+              <MenuItem value='rising' primaryText='Rising' />
+              <MenuItem value='controversial' primaryText='Controversial' />
+              <MenuItem value='top' primaryText='Top' />
+            </IconMenu>
+          }
         />
         <Drawer
           docked={false}
           width={200}
           open={this.state.open}
           onRequestChange={(open) => this.setState({open})}>
-          <MenuItem onClick={this.handleClose}>Home</MenuItem>
-          <MenuItem onClick={this.handleClose}>Popular</MenuItem>
+          <AppBar
+            title='reddit'
+            onLeftIconButtonTouchTap={this.handleToggle}
+          />
+          <List>
+            <ListItem primaryText='Home' onClick={() => this.goTo('/')} />
+            <ListItem primaryText='Popular' onClick={() => this.goTo('/r/popular')} />
+          </List>
         </Drawer>
       </div>
     )
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const {
-    pagination: { listingsByEndpoint },
-    entities: { listings }
-  } = state
-  // Populates the pages array
-  const pages = []
-  let endpoint = mySubredditsEndpoint({ where: 'subscriber' })
-  while (endpoint && listingsByEndpoint[endpoint]) {
-    const page = listingsByEndpoint[endpoint]
-    pages.push(page)
-    if (page.after) {
-      endpoint = mySubredditsEndpoint({
-        where: 'subscriber',
-        after: page.after
-      })
-    } else {
-      endpoint = null
-    }
-  }
-  // Aggregates the listings in the pageData array by page.
-  let isFetching = false
-  let pageData = []
-  for (let page in pages) {
-    if (Object.keys(listings).length > 0 && pages[page]) {
-      // Page is done loading
-      if (!pages[page].isFetching) {
-        const pageListings = pages[page].ids.map(id => listings[id])
-        for (let listing in pageListings) {
-          pageData.push(pageListings[listing])
-        }
-      } else {
-        // Page is loading
-        isFetching = true
-      }
-    }
-  }
-
-  return {
-    isFetching,
-    pages,
-    pageData
-  }
-}
-
-export default withRouter(connect(mapStateToProps)(Nav))
+export default withRouter(Nav)

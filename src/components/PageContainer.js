@@ -1,15 +1,13 @@
 import React from 'react'
 
 const styles = {
-  container: {
-    maxWidth: '1160px',
-    margin: 'auto',
-    padding: '79px 14px 15px'
+  pageContainer: {
+    padding: '76px 12px 24px'
   }
 }
 
 const PageContainer = ({ children }) =>
-  <div style={styles.container}>
+  <div style={styles.pageContainer}>
     {children}
   </div>
 
