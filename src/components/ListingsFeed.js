@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card'
+import { Card, CardHeader } from 'material-ui/Card'
 import FontIcon from 'material-ui/FontIcon'
 import RaisedButton from 'material-ui/RaisedButton'
 

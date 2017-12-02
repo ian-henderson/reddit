@@ -10,12 +10,6 @@ import MenuItem from 'material-ui/MenuItem'
 import { List, ListItem } from 'material-ui/List'
 import { paramsEndpoint } from '../utils'
 
-const styles = {
-  dropDownMenuLabel: {
-    color: 'white'
-  }
-}
-
 class Nav extends React.Component {
   constructor(props) {
     super(props)
