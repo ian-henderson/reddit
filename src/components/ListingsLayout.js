@@ -8,7 +8,7 @@ import PageOuterContainer from '../components/PageOuterContainer'
 const styles = {
   feed: {
     margin: 'auto',
-    width: '588px'
+    maxWidth: '588px'
   },
   pageButton: {
     display: 'inline-block',
