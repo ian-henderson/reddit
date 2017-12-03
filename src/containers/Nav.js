@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { parse } from 'query-string'
 import AppBar from 'material-ui/AppBar'
 import ContentFilter from 'material-ui/svg-icons/content/filter-list'
+import Divider from 'material-ui/Divider'
 import Drawer from 'material-ui/Drawer'
 import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
@@ -62,8 +63,7 @@ class Nav extends React.Component {
               onChange={this.handleSorting}
               value={this.state.sorting}
               anchorOrigin={{'vertical': 'bottom', 'horizontal': 'right'}}
-              targetOrigin={{'vertical': 'top', 'horizontal': 'right'}}
-            >
+              targetOrigin={{'vertical': 'top', 'horizontal': 'right'}}>
               <MenuItem value='hot' primaryText='Hot' />
               <MenuItem value='new' primaryText='New' />
               <MenuItem value='rising' primaryText='Rising' />
@@ -74,17 +74,22 @@ class Nav extends React.Component {
         />
         <Drawer
           docked={false}
-          width={200}
+          width={256}
           open={this.state.open}
-          onRequestChange={(open) => this.setState({open})}>
-          <AppBar
-            title='reddit'
-            onLeftIconButtonTouchTap={this.handleToggle}
-          />
-          <List>
-            <ListItem primaryText='Home' onClick={() => this.goTo('/')} />
-            <ListItem primaryText='Popular' onClick={() => this.goTo('/r/popular')} />
-          </List>
+          onRequestChange={open => this.setState({ open })}>
+          <div>
+            <AppBar
+              title='reddit'
+              onLeftIconButtonTouchTap={this.handleToggle}
+            />
+            <List>
+              <ListItem primaryText='Home' onClick={() => this.goTo('/')} />
+              <ListItem primaryText='Popular' onClick={() => this.goTo('/r/popular')} />
+              <ListItem primaryText='Subscriptions' disabled={true} />
+              <Divider />
+              <ListItem primaryText='Log out' disabled={true} />
+            </List>
+          </div>
         </Drawer>
       </div>
     )

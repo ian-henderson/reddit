@@ -3,10 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { parse } from 'query-string'
-import ListingsFeed from '../components/ListingsFeed'
-import Loading from '../components/Loading'
-import Nav from './Nav'
-import PageContainer from '../components/PageContainer'
+import ListingsLayout from '../components/ListingsLayout'
 import { loadListings } from '../actions'
 import { paramsEndpoint } from '../utils'
 
@@ -40,18 +37,10 @@ class Listings extends React.Component {
 
   render() {
     return (
-      <div>
-        <Nav />
-        <PageContainer>
-          {Object.keys(this.props.pageData).length > 0
-            ? <ListingsFeed
-                pages={this.props.pages}
-                pageData={this.props.pageData}
-              />
-            : <Loading />
-          }
-        </PageContainer>
-      </div>
+      <ListingsLayout
+        pages={this.props.pages}
+        pageData={this.props.pageData}
+      />
     )
   }
 }

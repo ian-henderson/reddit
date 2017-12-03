@@ -7,13 +7,9 @@ import AppBar from 'material-ui/AppBar'
 import RaisedButton from 'material-ui/RaisedButton'
 import { initializeToken } from '../actions'
 import { randomString } from '../utils'
-import PageContainer from '../components/PageContainer'
+import PageOuterContainer from '../components/PageOuterContainer'
 
 const styles = {
-  login: {
-    maxWidth: '900px',
-    paddingTop: '40px'
-  },
   loginTitle: {
     fontSize: '27px',
     fontWeight: 'bold',
@@ -37,7 +33,7 @@ const authorizationURL = width =>
   `&state=${localStorage.getItem('authState')}` +
   `&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}` +
   `&duration=permanent` +
-  `&scope=mysubreddits read`
+  `&scope=mysubreddits read vote`
 
 
 class Login extends React.Component {
@@ -49,16 +45,21 @@ class Login extends React.Component {
   }
 
   componentWillMount() {
+    // Redirects to '/' if authenticated.
     if (this.props.isAuthenticated) {
       this.props.history.push('/')
+      // If not authenticated, it makes sure that the authState is set.
     } else if (!localStorage.getItem('authState')) {
       localStorage.setItem('authState', randomString(10))
     }
   }
 
   componentDidMount() {
+    // Adds an event listener that updates the state on resize.
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
+    // When redirected back to this page from reddit.com, this checks the auth
+    // state for consistency and fetches an OAuth token.
     const { state, code, error } = parse(this.props.location.search)
     if (state && code) {
       if (state === localStorage.getItem('authState')) {
@@ -93,10 +94,10 @@ class Login extends React.Component {
           style={styles.loginAppBar}
           showMenuIconButton={false}
         />
-        <PageContainer>
-          <div style={styles.login}>
+        <PageOuterContainer>
+          <div style={{maxWidth: '400px', margin: 'auto'}}>
             <h1 style={styles.loginTitle}>Login</h1>
-            <p>Connect this Reddit client to your account.</p>
+            <p>Connect to your reddit account.</p>
             <RaisedButton
               label='Connect'
               style={styles.loginButton}
@@ -104,7 +105,7 @@ class Login extends React.Component {
               href={authorizationURL(this.state.width)}
             />
           </div>
-        </PageContainer>
+        </PageOuterContainer>
       </div>
     )
   }
