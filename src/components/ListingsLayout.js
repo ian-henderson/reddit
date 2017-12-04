@@ -17,20 +17,22 @@ const styles = {
     margin: 'auto',
     maxWidth: '588px'
   },
-  sorting: {
-    paddingLeft: '8px'
+  sortingArrow: {
+    fontSize: '15pt',
+    top: '0px'
+  },
+  sortingLabel: {
+    paddingLeft: '8px',
+    top: '-4px'
   },
   sortingIcon: {
     color: darkBlack,
     fontSize: '15pt',
-    marginTop: '6px',
-    paddingLeft: '0'
-  },
-  sortingUnderline: {
-    left: '-16px'
+    paddingLeft: '16px',
   },
   toolbar: {
-    backgroundColor: 'inherit'
+    backgroundColor: 'inherit',
+    top: '64px'
   }
 }
 
@@ -75,8 +77,8 @@ class ListingsLayout extends React.Component {
                 <DropDownMenu
                   value={this.state.sorting}
                   onChange={this.handleSorting}
-                  labelStyle={styles.sorting}
-                  underlineStyle={styles.sortingUnderline}>
+                  labelStyle={styles.sortingLabel}
+                  iconStyle={styles.sortingArrow}>
                   <MenuItem value='hot' primaryText='Hot' />
                   <MenuItem value='new' primaryText='New' />
                   <MenuItem value='rising' primaryText='Rising' />
