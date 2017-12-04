@@ -23,8 +23,7 @@ const styles = {
     color: grey600
   },
   cardHeaderSubtitle: {
-    fontSize: '10pt',
-    paddingRight: '20px'
+    fontSize: '8pt'
   },
   cardHeaderText: {
     padding: '0px'
@@ -52,7 +51,7 @@ const styles = {
     objectFit: 'cover'
   },
   cardText: {
-    padding: '2px 16px 0px'
+    padding: '0px 16px'
   },
   cardTextCaption: {
     overflow: 'hidden',
@@ -67,11 +66,11 @@ const styles = {
     color: grey600
   },
   commentsButtonLabel: {
-    fontSize: '12px',
+    fontSize: '10px',
     textTransform: 'none'
   },
   commentsButtonText: {
-    fontSize: '12pt'
+    fontSize: '10pt'
   },
   flexContainer: {
     display: 'flex'
@@ -81,18 +80,17 @@ const styles = {
     minWidth: '30px'
   },
   voteButtonIcon: {
-    fontSize: '12pt'
+    fontSize: '10pt'
   },
   voteButtonText: {
-    fontSize: '12px',
-    padding: '0px 0px 0px 8px'
+    fontSize: '10px',
+    padding: '0px 0px 0px 8px',
+    textTransform: 'none'
   }
 }
 
 const fontIcon = name =>
-  <FontIcon
-    className='material-icons'
-    style={styles.voteButtonIcon}>
+  <FontIcon className='material-icons' style={styles.voteButtonIcon}>
     {name}
   </FontIcon>
 
@@ -152,37 +150,42 @@ const ListingContent = props => {
 
 const Listing = props =>
   <Card style={styles.card}>
+    {/* Header */}
     <CardHeader
-      actAsExpander
       iconStyle={styles.cardHeaderIcon}
-      showExpandableButton
       style={styles.cardHeader}
       subtitle={subtitle(props.data)}
       subtitleStyle={styles.cardHeaderSubtitle}
       textStyle={styles.cardHeaderText} />
+    {/* Listing Title */}
     <ListingContent data={props.data} />
     <CardActions style={styles.cardActions}>
       <div style={styles.buttonSection}>
+        {/* Vote Buttons */}
         <FlatButton
           disableTouchRipple
           hoverColor={white}
           icon={fontIcon('arrow_upward')}
           label={numberFilter(props.data.score)}
           labelStyle={styles.voteButtonText}
-          style={styles.voteButton} />
+          style={styles.voteButton}
+        />
         <FlatButton disableTouchRipple
           hoverColor={white}
           icon={fontIcon('arrow_downward')}
-          style={styles.voteButton} />
+          style={styles.voteButton}
+        />
       </div>
       <div style={styles.buttonSection}>
+        {/* Comments Button */}
         <FlatButton
           disableTouchRipple
           hoverColor={white}
           icon={fontIcon('comment')}
           label={numberFilter(props.data.numComments)}
           labelStyle={styles.commentsButtonLabel}
-          style={styles.commentsButton} />
+          style={styles.commentsButton}
+        />
       </div>
     </CardActions>
   </Card>

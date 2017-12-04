@@ -3,7 +3,7 @@ import React from 'react'
 const styles = {
   pageContainer: {
     maxWidth: '1284px',
-    margin: '72px auto 16px',
+    margin: '64px auto 16px',
   }
 }
 

@@ -6,7 +6,8 @@ const styles = {
     position: 'relative'
   },
   refresh: {
-    marginLeft: '50%'
+    marginLeft: '50%',
+    marginTop: '30px'
   }
 }
 

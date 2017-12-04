@@ -2,14 +2,14 @@ import React from 'react'
 import Divider from 'material-ui/Divider'
 import Listing from './Listing'
 
-const ListingsFeed = props =>
+const ListingFeed = props =>
   <div>
     {props.pageData.map((listing, index) =>
       <div key={index}>
         <Listing data={listing.data} />
-        {index < Object.keys(props.pageData).length - 1 ? <Divider /> : null}
+        <Divider />
       </div>
     )}
   </div>
 
-export default ListingsFeed
+export default ListingFeed
