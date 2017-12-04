@@ -25,6 +25,32 @@ class Listings extends React.Component {
     )))
   }
 
+
+  componentDidMount() {
+    document.addEventListener('scroll', event => {
+      /*
+       * Fetches Posts on scroll
+       *
+       * Requirements
+       * 1. The content of the page is larger than the view
+       * 2. The position on screen is less than a page length from the bottom
+       */
+      const { body } = event.srcElement || event.originalTarget
+      const elementLargerThanView = body.offsetHeight > window.innerHeight
+      const closeToBottom = window.scrollY > (body.offsetHeight - window.innerHeight)
+
+      if (elementLargerThanView && closeToBottom) {
+        const { pages } = this.props
+        const lastPage = pages[pages.length - 1]
+        this.boundActionCreators.loadListings(paramsEndpoint(Object.assign({},
+          this.props.match.params,
+          parse(this.props.location.search),
+          { after: lastPage.after }
+        )))
+      }
+    })
+  }
+
   componentWillReceiveProps(nextProps) {
     // If params change, then reload the new page's params
     if (this.props.match.params !== nextProps.match.params) {
@@ -38,6 +64,7 @@ class Listings extends React.Component {
   render() {
     return (
       <ListingsLayout
+        isFetching={this.props.isFetching}
         pages={this.props.pages}
         pageData={this.props.pageData}
       />

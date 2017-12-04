@@ -1,25 +1,29 @@
 import React from 'react'
-import RefreshIndicator from 'material-ui/RefreshIndicator'
+import Card from 'material-ui/Card'
+import CircularProgress from 'material-ui/CircularProgress'
+import Divider from 'material-ui/Divider'
 
 const styles = {
-  container: {
-    position: 'relative'
+  card: {
+    borderRadius: '0',
+    boxShadow: '0',
+    position: 'relative',
+    textAlign: 'center'
   },
-  refresh: {
-    marginLeft: '50%',
-    marginTop: '30px'
+  circularProgress: {
+    margin: '20px auto'
   }
 }
 
 const Loading = () =>
-  <div style={styles.container}>
-    <RefreshIndicator
-      size={40}
-      left={-20}
-      top={10}
-      status='loading'
-      style={styles.refresh}
+  <Card style={styles.card}>
+    <Divider />
+    <CircularProgress
+      style={styles.circularProgress}
+      size={30}
+      thickness={3.0}
     />
-  </div>
+    <Divider />
+  </Card>
 
 export default Loading

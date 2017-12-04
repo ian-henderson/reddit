@@ -1,18 +1,16 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { parse } from 'query-string'
-import Divider from 'material-ui/Divider'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import FontIcon from 'material-ui/FontIcon'
 import MenuItem from 'material-ui/MenuItem'
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar'
-import { white } from 'material-ui/styles/colors'
+import { darkBlack } from 'material-ui/styles/colors'
 import ListingFeed from '../components/ListingFeed'
 import Loading from '../components/Loading'
 import Nav from '../containers/Nav'
 import PageOuterContainer from '../components/PageOuterContainer'
 import { paramsEndpoint } from '../utils'
-import { darkBlack } from 'material-ui/styles/colors'
 
 const styles = {
   feed: {
@@ -87,9 +85,9 @@ class ListingsLayout extends React.Component {
                 </DropDownMenu>
               </ToolbarGroup>
             </Toolbar>
-            <Divider />
             {Object.keys(this.props.pageData).length > 0
               ? <ListingFeed
+                  isFetching={this.props.isFetching}
                   pages={this.props.pages}
                   pageData={this.props.pageData}
                 />
