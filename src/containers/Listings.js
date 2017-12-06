@@ -25,7 +25,6 @@ class Listings extends React.Component {
     )))
   }
 
-
   componentDidMount() {
     document.addEventListener('scroll', event => {
       /*
@@ -49,10 +48,10 @@ class Listings extends React.Component {
        * calls.
        */
       const { body } = event.srcElement || event.originalTarget
-      const elementLargerThanView = body.offsetHeight > window.innerHeight
+      const bodyLargerThanView = body.offsetHeight > window.innerHeight
       const closeToBottom = window.scrollY > (body.offsetHeight / 2)
 
-      if (elementLargerThanView && closeToBottom) {
+      if (bodyLargerThanView && closeToBottom) {
         const { pages } = this.props
         const lastPage = pages[pages.length - 1]
         this.boundActionCreators.loadListings(listingsEndpoint(Object.assign({},
