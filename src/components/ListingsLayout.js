@@ -10,7 +10,7 @@ import ListingFeed from '../components/ListingFeed'
 import Loading from '../components/Loading'
 import Nav from '../containers/Nav'
 import PageOuterContainer from '../components/PageOuterContainer'
-import { paramsEndpoint } from '../utils'
+import { listingsEndpoint } from '../utils'
 
 const styles = {
   feed: {
@@ -55,7 +55,7 @@ class ListingsLayout extends React.Component {
   }
 
   handleSorting(event, key, value) {
-    const endpoint = paramsEndpoint(Object.assign({},
+    const endpoint = listingsEndpoint(Object.assign({},
       this.props.match.params,
       parse(this.props.location.search),
       { sorting: value }

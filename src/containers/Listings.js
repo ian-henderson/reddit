@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { parse } from 'query-string'
 import ListingsLayout from '../components/ListingsLayout'
 import { loadListings } from '../actions'
-import { paramsEndpoint } from '../utils'
+import { listingsEndpoint } from '../utils'
 
 class Listings extends React.Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class Listings extends React.Component {
       return this.props.history.push('/login')
     }
     // Loads listings based on the url and parameters
-    this.boundActionCreators.loadListings(paramsEndpoint(Object.assign({},
+    this.boundActionCreators.loadListings(listingsEndpoint(Object.assign({},
       this.props.match.params,
       parse(this.props.location.search)
     )))
@@ -32,17 +32,30 @@ class Listings extends React.Component {
        * Fetches Posts on scroll
        *
        * Requirements
-       * 1. The content of the page is larger than the view
-       * 2. The position on screen is less than a page length from the bottom
+       * 1. The content of the page is larger than the view.
+       * 2. The position on screen at least halfway down the page.
+       *
+       * Future Plans
+       * The issue I want to correct is the initial listing load when
+       * revisiting views that already have pages loaded.
+       *
+       * Solution Abstract
+       * There should be an abstraction that only loads the first page and
+       * then loads more pages as the user scrolls down the page. Once the
+       * abstraction runs out of downloaded pages, it'll fetch more from
+       * the api.
+       *
+       * Additionally, I'd also like to implement a HOF to handle the api
+       * calls.
        */
       const { body } = event.srcElement || event.originalTarget
       const elementLargerThanView = body.offsetHeight > window.innerHeight
-      const closeToBottom = window.scrollY > (body.offsetHeight - window.innerHeight)
+      const closeToBottom = window.scrollY > (body.offsetHeight / 2)
 
       if (elementLargerThanView && closeToBottom) {
         const { pages } = this.props
         const lastPage = pages[pages.length - 1]
-        this.boundActionCreators.loadListings(paramsEndpoint(Object.assign({},
+        this.boundActionCreators.loadListings(listingsEndpoint(Object.assign({},
           this.props.match.params,
           parse(this.props.location.search),
           { after: lastPage.after }
@@ -54,7 +67,7 @@ class Listings extends React.Component {
   componentWillReceiveProps(nextProps) {
     // If params change, then reload the new page's params
     if (this.props.match.params !== nextProps.match.params) {
-      this.boundActionCreators.loadListings(paramsEndpoint(Object.assign({},
+      this.boundActionCreators.loadListings(listingsEndpoint(Object.assign({},
         nextProps.match.params,
         parse(this.props.location.search)
       )))
@@ -79,7 +92,7 @@ const mapStateToProps = (state, ownProps) => {
   } = state
   // Populates pages array.
   const pages = []
-  let endpoint = paramsEndpoint(Object.assign({},
+  let endpoint = listingsEndpoint(Object.assign({},
     ownProps.match.params,
     parse(ownProps.location.search)
   ))
@@ -91,7 +104,7 @@ const mapStateToProps = (state, ownProps) => {
         ownProps.match.params,
         { after: page.after }
       )
-      endpoint = paramsEndpoint(nextPageParams)
+      endpoint = listingsEndpoint(nextPageParams)
     } else {
       endpoint = null
     }
