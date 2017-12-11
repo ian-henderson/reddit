@@ -23,7 +23,6 @@ const styles = {
     color: grey600
   },
   cardHeaderSubtitle: {
-    fontSize: '8pt'
   },
   cardHeaderText: {
     padding: '0px'
@@ -51,7 +50,8 @@ const styles = {
     objectFit: 'cover'
   },
   cardText: {
-    padding: '0px 16px'
+    padding: '0px 16px',
+    fontWeight: 'bold'
   },
   cardTextCaption: {
     overflow: 'hidden',
@@ -66,7 +66,7 @@ const styles = {
     color: grey600
   },
   commentsButtonLabel: {
-    fontSize: '10px',
+    fontSize: '10pt',
     textTransform: 'none'
   },
   commentsButtonText: {
@@ -77,13 +77,14 @@ const styles = {
   },
   voteButton: {
     color: grey600,
+    fontSize: '10pt',
     minWidth: '30px'
   },
   voteButtonIcon: {
     fontSize: '10pt'
   },
   voteButtonText: {
-    fontSize: '10px',
+    fontSize: '10pt',
     padding: '0px 0px 0px 8px',
     textTransform: 'none'
   }
