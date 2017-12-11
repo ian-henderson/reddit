@@ -56,8 +56,7 @@ export const initializeToken = code => dispatch => {
     grantType: 'authorization_code',
     redirectURI: process.env.REACT_APP_REDIRECT_URI,
     code
-  })
-    .then(response => {
+  }).then(response => {
       const camelizedJson = camelizeKeys(response.data)
       localStorage.setItem('lastUpdated', Date.now() / 1000)
       for (let i in camelizedJson) {

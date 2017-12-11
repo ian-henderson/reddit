@@ -50,8 +50,7 @@ const styles = {
     objectFit: 'cover'
   },
   cardText: {
-    padding: '0px 16px',
-    fontWeight: 'bold'
+    padding: '0px 16px'
   },
   cardTextCaption: {
     overflow: 'hidden',
