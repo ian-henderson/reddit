@@ -1,5 +1,3 @@
-// TODO: Wrap the API endpoints into one function.
-
 export const mySubredditsEndpoint = params => {
   let endpoint = `/subreddits/mine/${params.where}`
   if (params.after) {
