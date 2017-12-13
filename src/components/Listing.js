@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
-import Card, { CardActions, CardHeader, CardMedia, CardText } from 'material-ui/Card'
+import Card, { CardActions, CardHeader, CardText } from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
 import FontIcon from 'material-ui/FontIcon'
 import { grey300, grey600, white } from 'material-ui/styles/colors'
@@ -104,21 +104,12 @@ const numberFilter = value => {
     : `${number}`
 }
 
-const subtitle = listingData => {
-  const { subredditNamePrefixed, createdUtc, media, domain } = listingData
-  const timeAgo = moment.unix(createdUtc).fromNow()
-  let string = `${subredditNamePrefixed} • ${timeAgo}`
-  if (!media && domain) string += ` • ${domain}`
-
-  return string
-}
-
 const Subtitle = props => {
   const { subredditNamePrefixed, createdUtc, media, domain } = props.data
   const timeAgo = moment.unix(createdUtc).fromNow()
   return (
     <div>
-      <Link to={subredditNamePrefixed} style={styles.link}>{subredditNamePrefixed}</Link>
+      <Link to={`/${subredditNamePrefixed}`} style={styles.link}>{subredditNamePrefixed}</Link>
       {` • ${timeAgo}`}
       {!media && domain ? ` • ${domain}` : null}
     </div>
