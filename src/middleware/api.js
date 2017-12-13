@@ -42,10 +42,14 @@ const callApi = (endpoint, schema) => {
 const listingSchema = new schema.Entity('listings', {}, {
   idAttribute: listing => listing.data.id
 })
+const subredditSchema = new schema.Entity('subreddits', {}, {
+  idAttribute: subreddit => subreddit.displayName.toLowerCase()
+})
 
 // Schemas for Reddit API responses.
 export const Schemas = {
-  LISTINGS: { data: { children: [listingSchema] } }
+  LISTINGS: { data: { children: [listingSchema] } },
+  SUBREDDIT: { data: subredditSchema }
 }
 
 // Action key that carries API call info interpreted by this Redux middleware.

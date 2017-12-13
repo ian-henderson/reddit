@@ -74,6 +74,7 @@ const styles = {
     display: 'flex'
   },
   link: {
+    color: 'inherit',
     textDecoration: 'none'
   },
   voteButton: {
@@ -110,6 +111,18 @@ const subtitle = listingData => {
   if (!media && domain) string += ` • ${domain}`
 
   return string
+}
+
+const Subtitle = props => {
+  const { subredditNamePrefixed, createdUtc, media, domain } = props.data
+  const timeAgo = moment.unix(createdUtc).fromNow()
+  return (
+    <div>
+      <Link to={subredditNamePrefixed} style={styles.link}>{subredditNamePrefixed}</Link>
+      {` • ${timeAgo}`}
+      {!media && domain ? ` • ${domain}` : null}
+    </div>
+  )
 }
 
 const ListingContent = props => {
@@ -156,7 +169,7 @@ const Listing = props =>
     <CardHeader
       iconStyle={styles.cardHeaderIcon}
       style={styles.cardHeader}
-      subtitle={subtitle(props.data)}
+      subtitle={<Subtitle data={props.data} />}
       textStyle={styles.cardHeaderText} />
     {/* Listing Title */}
     <Link to={props.data.permalink} style={styles.link}>
