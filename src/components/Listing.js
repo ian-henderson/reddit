@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import moment from 'moment'
 import Card, { CardActions, CardHeader, CardMedia, CardText } from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
@@ -21,8 +22,6 @@ const styles = {
   },
   cardHeaderIcon: {
     color: grey600
-  },
-  cardHeaderSubtitle: {
   },
   cardHeaderText: {
     padding: '0px'
@@ -73,6 +72,9 @@ const styles = {
   },
   flexContainer: {
     display: 'flex'
+  },
+  link: {
+    textDecoration: 'none'
   },
   voteButton: {
     color: grey600,
@@ -155,10 +157,11 @@ const Listing = props =>
       iconStyle={styles.cardHeaderIcon}
       style={styles.cardHeader}
       subtitle={subtitle(props.data)}
-      subtitleStyle={styles.cardHeaderSubtitle}
       textStyle={styles.cardHeaderText} />
     {/* Listing Title */}
-    <ListingContent data={props.data} />
+    <Link to={props.data.permalink} style={styles.link}>
+      <ListingContent data={props.data} />
+    </Link>
     <CardActions style={styles.cardActions}>
       <div style={styles.buttonSection}>
         {/* Vote Buttons */}
@@ -166,7 +169,9 @@ const Listing = props =>
           disableTouchRipple
           hoverColor={white}
           icon={fontIcon('arrow_upward')}
-          label={numberFilter(props.data.score)}
+          label={props.data.score > 1
+            ? numberFilter(props.data.score)
+            : 'Vote'}
           labelStyle={styles.voteButtonText}
           style={styles.voteButton}
         />
@@ -182,7 +187,9 @@ const Listing = props =>
           disableTouchRipple
           hoverColor={white}
           icon={fontIcon('comment')}
-          label={numberFilter(props.data.numComments)}
+          label={props.data.numComments > 0 
+            ? numberFilter(props.data.numComments) 
+            : 'Comment'}
           labelStyle={styles.commentsButtonLabel}
           style={styles.commentsButton}
         />

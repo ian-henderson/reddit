@@ -7,7 +7,6 @@ import MenuItem from 'material-ui/MenuItem'
 import { Toolbar, ToolbarGroup } from 'material-ui/Toolbar'
 import { darkBlack } from 'material-ui/styles/colors'
 import ListingFeed from '../components/ListingFeed'
-import Loading from '../components/Loading'
 import Nav from '../containers/Nav'
 import PageOuterContainer from '../components/PageOuterContainer'
 import { listingsEndpoint } from '../utils'
@@ -32,12 +31,11 @@ const styles = {
   },
   toolbar: {
     backgroundColor: 'inherit',
-    top: '64px'
+    top: '46px'
   }
 }
 
-// TODO: add sorting dropdown before feed
-class ListingsLayout extends React.Component {
+class ListingsLayout extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = { sorting: null }
@@ -71,6 +69,7 @@ class ListingsLayout extends React.Component {
           <div style={styles.feed}>
             <Toolbar style={styles.toolbar}>
               <ToolbarGroup firstChild={true}>
+                {/* Sorting Menu */}
                 <FontIcon className='material-icons' style={styles.sortingIcon}>
                   sort
                 </FontIcon>
@@ -87,14 +86,11 @@ class ListingsLayout extends React.Component {
                 </DropDownMenu>
               </ToolbarGroup>
             </Toolbar>
-            {Object.keys(this.props.pageData).length > 0
-              ? <ListingFeed
-                  isFetching={this.props.isFetching}
-                  pages={this.props.pages}
-                  pageData={this.props.pageData}
-                />
-              : <Loading />
-            }
+            <ListingFeed
+              isFetching={this.props.isFetching}
+              pages={this.props.pages}
+              pageData={this.props.pageData}
+            />
           </div>
         </PageOuterContainer>
       </div>

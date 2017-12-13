@@ -16,10 +16,20 @@ const fetchListings = endpoint => ({
   }
 })
 
-export const loadListings = endpoint => (dispatch, getState) => {
+export const loadListingsByEndpoint = endpoint => (dispatch, getState) => {
   if (getState().pagination.listingsByEndpoint[endpoint]) {
     return null
   }
+
+  return dispatch(fetchListings(endpoint))
+}
+
+export const loadListingsByName = names => (dispatch, getState) => {
+  const { listings } = getState().entities
+  const namesToLoad = (accumulator, name) => {
+    if (!listings[name]) return name + ' '
+  }
+  const endpoint = '/by_id/' + names.reduce(namesToLoad)
 
   return dispatch(fetchListings(endpoint))
 }

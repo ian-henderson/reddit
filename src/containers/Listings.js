@@ -4,14 +4,13 @@ import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { parse } from 'query-string'
 import ListingsLayout from '../components/ListingsLayout'
-import { loadListings } from '../actions'
+import { loadListingsByEndpoint } from '../actions'
 import { listingsEndpoint } from '../utils'
 
-// TODO: The redux store and this component's state need to be independent.
 class Listings extends React.Component {
   constructor(props) {
     super(props)
-    this.boundActionCreators = bindActionCreators({ loadListings }, props.dispatch)
+    this.boundActionCreators = bindActionCreators({ loadListingsByEndpoint }, props.dispatch)
   }
 
   componentDidMount() {
@@ -20,7 +19,7 @@ class Listings extends React.Component {
       return this.props.history.push('/login')
     }
     // Loads initial listings based on the url and parameters.
-    this.boundActionCreators.loadListings(listingsEndpoint(Object.assign({},
+    this.boundActionCreators.loadListingsByEndpoint(listingsEndpoint(Object.assign({},
       this.props.match.params,
       parse(this.props.location.search)
     )))
@@ -32,7 +31,7 @@ class Listings extends React.Component {
       if (bodyLargerThanView && closeToBottom) {
         const { pages } = this.props
         const lastPage = pages[pages.length - 1]
-        this.boundActionCreators.loadListings(listingsEndpoint(Object.assign({},
+        this.boundActionCreators.loadListingsByEndpoint(listingsEndpoint(Object.assign({},
           this.props.match.params,
           parse(this.props.location.search),
           { after: lastPage.after }
@@ -44,7 +43,7 @@ class Listings extends React.Component {
   componentWillReceiveProps(nextProps) {
     // If params change, then reload the new page's params and reset page count.
     if (this.props.match.params !== nextProps.match.params) {
-      this.boundActionCreators.loadListings(listingsEndpoint(Object.assign({},
+      this.boundActionCreators.loadListingsByEndpoint(listingsEndpoint(Object.assign({},
         nextProps.match.params,
         parse(this.props.location.search)
       )))

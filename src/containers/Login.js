@@ -19,9 +19,6 @@ const styles = {
   loginAppbar: {
     position: 'fixed',
     top: '0'
-  },
-  loginButton: {
-    margin: '12'
   }
 }
 
@@ -33,7 +30,7 @@ const authorizationURL = width =>
   `&state=${localStorage.getItem('authState')}` +
   `&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}` +
   `&duration=permanent` +
-  `&scope=mysubreddits read vote`
+  `&scope=read`
 
 
 class Login extends React.Component {
@@ -95,12 +92,11 @@ class Login extends React.Component {
           showMenuIconButton={false}
         />
         <PageOuterContainer>
-          <div style={{maxWidth: '400px', margin: 'auto'}}>
+          <div style={{maxWidth: '588px', padding: '24px'}}>
             <h1 style={styles.loginTitle}>Login</h1>
             <p>Connect to your reddit account.</p>
             <RaisedButton
               label='Connect'
-              style={styles.loginButton}
               primary={true}
               href={authorizationURL(this.state.width)}
             />

@@ -1,5 +1,4 @@
 import { camelizeKeys } from 'humps'
-
 import { fetchToken } from '../actions'
 import * as ActionCreators from '../actions'
 
@@ -21,8 +20,7 @@ export default store => next => action => {
         return fetchToken({
           grantType: 'refresh_token',
           refreshToken
-        })
-          .then(response => {
+        }).then(response => {
             const camelizedJson = camelizeKeys(response.data)
             localStorage.setItem('lastUpdated', Date.now() / 1000)
             for (let i in camelizedJson) {
