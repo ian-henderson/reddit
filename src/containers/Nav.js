@@ -31,15 +31,12 @@ class Nav extends React.Component {
   }
 
   render() {
-    const { subreddit } = this.props.match.params
-    const title = subreddit ? `r/${subreddit}` : 'Home'
     return (
       <div>
         <AppBar
           style={styles.appBar}
           title='reddit'
           onLeftIconButtonTouchTap={this.handleToggle}
-          onTitleTouchTap={() => window.scrollTo(0, 0)}
         />
         <Drawer
           docked={false}

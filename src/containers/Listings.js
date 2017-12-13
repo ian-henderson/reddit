@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { parse } from 'query-string'
+import { Helmet } from 'react-helmet'
 import ListingsLayout from '../components/ListingsLayout'
 import { loadListingsByEndpoint } from '../actions'
 import { listingsEndpoint } from '../utils'
@@ -26,6 +27,10 @@ class Listings extends React.Component {
       this.props.match.params,
       parse(this.props.location.search)
     )))
+    // Loads subreddit data.
+    if (this.props.match.params.subreddit) {
+      // TODO: Create action to fetch subreddit data.
+    }
     // Loads next page when two page lengths away from bottom.
     document.addEventListener('scroll', event => {
       const { body } = event.srcElement || event.originalTarget
@@ -55,11 +60,20 @@ class Listings extends React.Component {
 
   render() {
     return (
-      <ListingsLayout
-        isFetching={this.props.isFetching}
-        pages={this.props.pages}
-        pageData={this.props.pageData}
-      />
+      <div>
+        <Helmet>
+          <title>
+            {this.props.match.params.subreddit 
+              ? 'r/' + this.props.match.params.subreddit
+              : 'reddit: the front page of the internet'}
+          </title>
+        </Helmet>
+        <ListingsLayout
+          isFetching={this.props.isFetching}
+          pages={this.props.pages}
+          pageData={this.props.pageData}
+        />
+      </div>
     )
   }
 }

@@ -24,12 +24,14 @@ export const loadListingsByEndpoint = endpoint => (dispatch, getState) => {
   return dispatch(fetchListings(endpoint))
 }
 
-export const loadListingsByName = names => (dispatch, getState) => {
+export const loadListingsByName = (prefix, names) => (dispatch, getState) => {
   const { listings } = getState().entities
-  const namesToLoad = (accumulator, name) => {
-    if (!listings[name]) return name + ' '
+  const namesToLoad = []
+  for (let name in names) {
+    if (!listings[names[name]]) namesToLoad.push(names[name])
   }
-  const endpoint = '/by_id/' + names.reduce(namesToLoad)
+  if (namesToLoad.length === 0) return null
+  const endpoint = '/by_id/' + namesToLoad.map(name => prefix + name)
 
   return dispatch(fetchListings(endpoint))
 }

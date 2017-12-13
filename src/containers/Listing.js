@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import ListingLayout from '../components/ListingLayout'
 import { loadListingsByName } from '../actions'
 
@@ -20,14 +21,23 @@ class Listing extends React.Component {
       return this.props.history.push('/login')
     }
     // Loads the listing.
-    this.boundActionCreators.loadListingsByName([
-      't3_' + this.props.match.params.id
+    this.boundActionCreators.loadListingsByName('t3_', [
+      this.props.match.params.id
     ])
   }
 
   render() {
     return (
-      <ListingLayout />
+      <div>
+        <Helmet>
+          <title>
+            {this.props.listing 
+              ? this.props.listing.data.title
+              : 'r/' + this.props.match.params.subreddit}
+          </title>
+        </Helmet>
+        <ListingLayout />
+      </div>
     )
   }
 }
