@@ -10,7 +10,10 @@ import { listingsEndpoint } from '../utils'
 class Listings extends React.Component {
   constructor(props) {
     super(props)
-    this.boundActionCreators = bindActionCreators({ loadListingsByEndpoint }, props.dispatch)
+    this.boundActionCreators = bindActionCreators(
+      { loadListingsByEndpoint }, 
+      props.dispatch
+    )
   }
 
   componentDidMount() {
@@ -23,11 +26,11 @@ class Listings extends React.Component {
       this.props.match.params,
       parse(this.props.location.search)
     )))
-    // Loads next page when halfway down the page.
+    // Loads next page when two page lengths away from bottom.
     document.addEventListener('scroll', event => {
       const { body } = event.srcElement || event.originalTarget
       const bodyLargerThanView = body.offsetHeight > window.innerHeight
-      const closeToBottom = window.scrollY > (body.offsetHeight / 2)
+      const closeToBottom = window.scrollY > (body.offsetHeight - (2 * window.innerHeight))
       if (bodyLargerThanView && closeToBottom) {
         const { pages } = this.props
         const lastPage = pages[pages.length - 1]

@@ -5,6 +5,14 @@ import Divider from 'material-ui/Divider'
 import Drawer from 'material-ui/Drawer'
 import { List, ListItem } from 'material-ui/List'
 
+const styles = {
+  appBar: {
+    fontFamily: "'Roboto Mono', monospace",
+    position: 'fixed',
+    top: '0px'
+  }
+}
+
 class Nav extends React.Component {
   constructor(props) {
     super(props)
@@ -28,8 +36,8 @@ class Nav extends React.Component {
     return (
       <div>
         <AppBar
-          style={{'position': 'fixed', 'top': '0'}}
-          title={title}
+          style={styles.appBar}
+          title='reddit'
           onLeftIconButtonTouchTap={this.handleToggle}
           onTitleTouchTap={() => window.scrollTo(0, 0)}
         />
@@ -39,10 +47,6 @@ class Nav extends React.Component {
           open={this.state.open}
           onRequestChange={open => this.setState({ open })}>
           <div>
-            <AppBar
-              title='reddit'
-              onLeftIconButtonTouchTap={this.handleToggle}
-            />
             <List>
               <ListItem primaryText='Home' onClick={() => this.goTo('/')} />
               <ListItem primaryText='Popular' onClick={() => this.goTo('/r/popular')} />

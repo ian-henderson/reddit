@@ -3,20 +3,14 @@ import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import Listing from './Listing'
 import Listings from './Listings'
 import Login from './Login'
-
-const muiTheme = getMuiTheme({
-  appBar: {
-    height: 46
-  }
-})
+import theme from '../theme'
 
 const Root = ({ store }) =>
   <Provider store={store}>
-    <MuiThemeProvider muiTheme={muiTheme}>
+    <MuiThemeProvider muiTheme={theme}>
       <Switch>
         <Route path="/login" component={Login}/>
         <Route exact path="/" component={Listings}/>

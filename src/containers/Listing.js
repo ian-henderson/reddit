@@ -8,7 +8,10 @@ import { loadListingsByName } from '../actions'
 class Listing extends React.Component {
   constructor(props) {
     super(props)
-    this.boundActionCreators = bindActionCreators({ loadListingsByName }, props.dispatch)
+    this.boundActionCreators = bindActionCreators(
+      { loadListingsByName }, 
+      props.dispatch
+    )
   }
 
   componentDidMount() {
@@ -17,7 +20,9 @@ class Listing extends React.Component {
       return this.props.history.push('/login')
     }
     // Loads the listing.
-    this.boundActionCreators.loadListingsByName(['t3_' + this.props.match.params.id])
+    this.boundActionCreators.loadListingsByName([
+      't3_' + this.props.match.params.id
+    ])
   }
 
   render() {
@@ -28,11 +33,13 @@ class Listing extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { listings } = state.entities
-  return {
-    isAuthenticated: state.auth.isAuthenticated,
-    listing: listings[ownProps.match.params.id]
-  }
+  const { 
+    entities: { listings }, 
+    auth: { isAuthenticated }
+  } = state
+  const { id } = ownProps.match.params
+
+  return { isAuthenticated, listing: listings[id] }
 }
 
 export default withRouter(connect(mapStateToProps)(Listing))
