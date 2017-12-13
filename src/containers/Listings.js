@@ -28,8 +28,9 @@ class Listings extends React.Component {
       parse(this.props.location.search)
     )))
     // Loads subreddit data.
-    if (this.props.match.params.subreddit) {
-      this.boundActionCreators.loadSubredditAbout(this.props.match.params.subreddit)
+    const { subreddit } = this.props.match.params
+    if (subreddit && subreddit !== 'popular') {
+      this.boundActionCreators.loadSubredditAbout(subreddit)
     }
     // Loads next page when two page lengths away from bottom.
     document.addEventListener('scroll', event => {
