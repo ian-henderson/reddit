@@ -56,8 +56,9 @@ class Listings extends React.Component {
         parse(this.props.location.search)
       )))
       // Loads subreddit data.
-      if (nextProps.match.params.subreddit) {
-        this.boundActionCreators.loadSubredditAbout(nextProps.match.params.subreddit)
+      const { subreddit } = nextProps.match.params
+      if (subreddit && subreddit !== 'popular') {
+        this.boundActionCreators.loadSubredditAbout(subreddit)
       }
     }
   }
