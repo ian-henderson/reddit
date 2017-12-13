@@ -65,15 +65,17 @@ class Listings extends React.Component {
   }
 
   render() {
+    let title = 'reddit: the front page of the internet'
+    const { subreddit } = this.props.match.params
+    if (subreddit === 'popular') {
+      title = 'popular links'
+    } else if (this.props.subreddit) {
+      title = this.props.subreddit.title
+    }
+
     return (
       <div>
-        <Helmet>
-          <title>
-            {this.props.subreddit 
-              ? this.props.subreddit.title
-              : 'reddit: the front page of the internet'}
-          </title>
-        </Helmet>
+        <Helmet><title>{title}</title></Helmet>
         <ListingsLayout
           isFetching={this.props.isFetching}
           pages={this.props.pages}
