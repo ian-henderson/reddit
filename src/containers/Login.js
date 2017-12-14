@@ -19,6 +19,11 @@ const styles = {
   loginAppbar: {
     position: 'fixed',
     top: '0'
+  },
+  loginContainer: {
+    maxWidth: '588px', 
+    margin: 'auto',
+    padding: '24px'
   }
 }
 
@@ -92,7 +97,7 @@ class Login extends React.Component {
           showMenuIconButton={false}
         />
         <PageOuterContainer>
-          <div style={{maxWidth: '588px', padding: '24px'}}>
+          <div style={styles.loginContainer}>
             <h1 style={styles.loginTitle}>Login</h1>
             <p>Connect to your reddit account.</p>
             <RaisedButton

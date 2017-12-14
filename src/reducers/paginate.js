@@ -30,11 +30,17 @@ const paginate = ({ types, mapActionToKey }) => {
           isFetching: true
         }
       case successType:
+        // If there is no action.response.result.data.children array,
+        // then assume that the action is a single entity.
+        // TODO: Find a better way to structure this.
         return {
           ...state,
           after: action.response.result.data.after,
           before: action.response.result.data.before,
-          ids: union(state.ids, action.response.result.data.children),
+          ids: union(
+            state.ids, 
+            action.response.result.data.children || [action.response.result.data]
+          ),
           isFetching: false,
           kind: action.response.result.kind,
           pageCount: state.pageCount + 1

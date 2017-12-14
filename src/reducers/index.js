@@ -5,7 +5,7 @@ import paginate from './paginate'
 import * as ActionTypes from '../actions'
 
 // Updates an entity cache in response to any action with response.entities.
-const entities = (state = { listings: {}, subreddits: {} }, action) => {
+const entities = (state = { listings: {}, subredditsInfo: {} }, action) => {
   if (action.response && action.response.entities) {
     return merge({}, state, action.response.entities)
   }
@@ -34,6 +34,14 @@ const pagination = combineReducers({
       ActionTypes.LISTINGS_REQUEST,
       ActionTypes.LISTINGS_SUCCESS,
       ActionTypes.LISTINGS_FAILURE
+    ]
+  }),
+  subredditsInfoByEndpoint: paginate({
+    mapActionToKey: action => action.endpoint,
+    types: [
+      ActionTypes.SUBREDDIT_INFO_REQUEST,
+      ActionTypes.SUBREDDIT_INFO_SUCCESS,
+      ActionTypes.SUBREDDIT_INFO_FAILURE
     ]
   })
 })

@@ -35,9 +35,3 @@ export const loadListingsByName = (prefix, names) => (dispatch, getState) => {
 
   return dispatch(fetchListings(endpoint, Schemas.LISTINGS))
 }
-
-export const loadSubredditAbout = subreddit => (dispatch, getState) => {
-  const endpoint = `/r/${subreddit}/about`
-
-  return dispatch(fetchListings(endpoint, Schemas.SUBREDDIT))
-}

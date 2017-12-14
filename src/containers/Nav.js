@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import AppBar from 'material-ui/AppBar'
 import Divider from 'material-ui/Divider'
@@ -34,8 +35,12 @@ class Nav extends React.Component {
   }
 
   render() {
+    const { subredditInfo } = this.props
+    let title = subredditInfo ? subredditInfo.displayNamePrefixed : 'reddit'
     const { subreddit } = this.props.match.params
-    const title = subreddit ? `r/${subreddit}` : 'reddit'
+    if (subreddit && subreddit.toLowerCase() === 'popular') {
+      title = 'r/popular'
+    }
     return (
       <div>
         <AppBar
@@ -68,4 +73,11 @@ class Nav extends React.Component {
   }
 }
 
-export default withRouter(Nav)
+const mapStateToProps = (state, ownProps) => {
+  const { subredditsInfo } = state.entities
+  const { subreddit } = ownProps.match.params
+  const subredditInfo = subreddit ? subredditsInfo[subreddit.toLowerCase()] : null
+  return { subredditInfo }
+}
+
+export default withRouter(connect(mapStateToProps)(Nav))

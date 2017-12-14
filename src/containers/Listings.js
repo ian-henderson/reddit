@@ -5,14 +5,14 @@ import { withRouter } from 'react-router-dom'
 import { parse } from 'query-string'
 import { Helmet } from 'react-helmet'
 import ListingsLayout from '../components/ListingsLayout'
-import { loadListingsByEndpoint, loadSubredditAbout } from '../actions'
+import { loadListingsByEndpoint, loadSubredditInfo } from '../actions'
 import { listingsEndpoint } from '../utils'
 
 class Listings extends React.Component {
   constructor(props) {
     super(props)
     this.boundActionCreators = bindActionCreators(
-      { loadListingsByEndpoint, loadSubredditAbout }, 
+      { loadListingsByEndpoint, loadSubredditInfo }, 
       props.dispatch
     )
   }
@@ -30,7 +30,7 @@ class Listings extends React.Component {
     // Loads subreddit data.
     const { subreddit } = this.props.match.params
     if (subreddit && subreddit !== 'popular') {
-      this.boundActionCreators.loadSubredditAbout(subreddit)
+      this.boundActionCreators.loadSubredditInfo(subreddit)
     }
     // Loads next page when two page lengths away from bottom.
     document.addEventListener('scroll', event => {
@@ -59,7 +59,7 @@ class Listings extends React.Component {
       // Loads subreddit data.
       const { subreddit } = nextProps.match.params
       if (subreddit && subreddit !== 'popular') {
-        this.boundActionCreators.loadSubredditAbout(subreddit)
+        this.boundActionCreators.loadSubredditInfo(subreddit)
       }
     }
   }
@@ -69,8 +69,8 @@ class Listings extends React.Component {
     const { subreddit } = this.props.match.params
     if (subreddit === 'popular') {
       title = 'popular links'
-    } else if (this.props.subreddit) {
-      title = this.props.subreddit.title
+    } else if (this.props.subredditInfo) {
+      title = this.props.subredditInfo.title
     }
 
     return (
@@ -90,7 +90,7 @@ const mapStateToProps = (state, ownProps) => {
   const {
     auth: { isAuthenticated },
     pagination: { listingsByEndpoint },
-    entities: { listings, subreddits }
+    entities: { listings, subredditsInfo }
   } = state
   // Populates pages array.
   const pages = []
@@ -130,18 +130,17 @@ const mapStateToProps = (state, ownProps) => {
   }
 
   // Finds the subreddit data if applicable.
-  let subreddit = null
-  const subredditParam = ownProps.match.params.subreddit
-  if (subredditParam && subreddits[subredditParam.toLowerCase()]) {
-    subreddit = subreddits[subredditParam.toLowerCase()]
-  }
+  // This syntax is a little tricky, so
+  // TODO: Create a util function to simplify this.
+  const { subreddit } = ownProps.match.params
+  const subredditInfo = subreddit && subredditsInfo[subreddit.toLowerCase()]
 
   return {
     isAuthenticated,
     isFetching,
     pageData,
     pages,
-    subreddit
+    subredditInfo
   }
 }
 

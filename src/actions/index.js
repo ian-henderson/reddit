@@ -1,5 +1,6 @@
 export * from './auth'
 export * from './listings'
+export * from './subreddits'
 
 export const RESET_ERROR_MESSAGE = 'RESET_ERROR_MESSAGE'
 
