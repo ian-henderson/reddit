@@ -16,10 +16,6 @@ const styles = {
     margin: 'auto',
     maxWidth: '588px'
   },
-  sortingArrow: {
-    fontSize: '15pt',
-    top: '0px'
-  },
   sortingLabel: {
     paddingLeft: '8px',
     top: '-4px'
@@ -31,6 +27,7 @@ const styles = {
   },
   toolbar: {
     backgroundColor: 'inherit',
+    height: '46px',
     top: '46px'
   }
 }
@@ -77,7 +74,7 @@ class ListingsLayout extends React.PureComponent {
                   value={this.state.sorting}
                   onChange={this.handleSorting}
                   labelStyle={styles.sortingLabel}
-                  iconStyle={styles.sortingArrow}>
+                  iconButton={null}>
                   <MenuItem value='hot' primaryText='Hot' />
                   <MenuItem value='new' primaryText='New' />
                   <MenuItem value='rising' primaryText='Rising' />

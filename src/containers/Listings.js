@@ -88,6 +88,7 @@ class Listings extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   const {
+    auth: { isAuthenticated },
     pagination: { listingsByEndpoint },
     entities: { listings, subreddits }
   } = state
@@ -136,10 +137,10 @@ const mapStateToProps = (state, ownProps) => {
   }
 
   return {
-    isAuthenticated: state.auth.isAuthenticated,
+    isAuthenticated,
     isFetching,
-    pages,
     pageData,
+    pages,
     subreddit
   }
 }

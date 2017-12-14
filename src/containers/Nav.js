@@ -10,6 +10,9 @@ const styles = {
     fontFamily: "'Roboto Mono', monospace",
     position: 'fixed',
     top: '0px'
+  },
+  appBarDrawer: {
+    fontFamily: "'Roboto Mono', monospace",
   }
 }
 
@@ -31,11 +34,13 @@ class Nav extends React.Component {
   }
 
   render() {
+    const { subreddit } = this.props.match.params
+    const title = subreddit ? `r/${subreddit}` : 'reddit'
     return (
       <div>
         <AppBar
           style={styles.appBar}
-          title='reddit'
+          title={title}
           onLeftIconButtonTouchTap={this.handleToggle}
         />
         <Drawer
@@ -44,6 +49,11 @@ class Nav extends React.Component {
           open={this.state.open}
           onRequestChange={open => this.setState({ open })}>
           <div>
+            <AppBar
+              style={styles.appBarDrawer}
+              title={title}
+              onLeftIconButtonTouchTap={this.handleToggle}
+            />
             <List>
               <ListItem primaryText='Home' onClick={() => this.goTo('/')} />
               <ListItem primaryText='Popular' onClick={() => this.goTo('/r/popular')} />
