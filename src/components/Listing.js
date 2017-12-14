@@ -78,7 +78,9 @@ const styles = {
     textDecoration: 'none'
   },
   subtitleLink: {
-    color: 'inherit'
+    color: 'inherit',
+    fontWeight: 'bold',
+    textDecoration: 'none'
   },
   voteButton: {
     color: grey600,
