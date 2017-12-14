@@ -73,9 +73,12 @@ const styles = {
   flexContainer: {
     display: 'flex'
   },
-  link: {
+  listingContentLink: {
     color: 'inherit',
     textDecoration: 'none'
+  },
+  subtitleLink: {
+    color: 'inherit'
   },
   voteButton: {
     color: grey600,
@@ -109,7 +112,7 @@ const Subtitle = props => {
   const timeAgo = moment.unix(createdUtc).fromNow()
   return (
     <div>
-      <Link to={`/${subredditNamePrefixed}`} style={styles.link}>{subredditNamePrefixed}</Link>
+      <Link to={`/${subredditNamePrefixed}`} style={styles.subtitleLink}>{subredditNamePrefixed}</Link>
       {` • ${timeAgo}`}
       {!media && domain ? ` • ${domain}` : null}
     </div>
@@ -163,7 +166,7 @@ const Listing = props =>
       subtitle={<Subtitle data={props.data} />}
       textStyle={styles.cardHeaderText} />
     {/* Listing Title */}
-    <Link to={props.data.permalink} style={styles.link}>
+    <Link to={props.data.permalink} style={styles.listingContentLink}>
       <ListingContent data={props.data} />
     </Link>
     <CardActions style={styles.cardActions}>
