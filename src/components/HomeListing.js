@@ -160,7 +160,7 @@ const Subtitle = props => {
   )
 }
 
-const Listing = props =>
+const HomeListing = props =>
   <Card style={styles.card}>
     {/* Header */}
     <CardHeader
@@ -207,4 +207,4 @@ const Listing = props =>
     </CardActions>
   </Card>
 
-export default Listing
+export default HomeListing

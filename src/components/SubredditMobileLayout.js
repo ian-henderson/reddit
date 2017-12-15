@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { parse } from 'query-string'
-import ListingFeed from '../components/ListingFeed'
+import SubredditListingFeed from '../components/SubredditListingFeed'
 import ListingFeedToolbar from '../components/ListingFeedToolbar'
 import Nav from '../containers/Nav'
 import PageOuterContainer from '../components/PageOuterContainer'
@@ -58,7 +58,7 @@ class SubredditMobileLayout extends React.PureComponent {
               sortingValue={this.state.sorting} 
               handleSorting={this.handleSorting} 
             />
-            <ListingFeed
+            <SubredditListingFeed
               isFetching={this.props.isFetching}
               pages={this.props.pages}
               pageData={this.props.pageData}

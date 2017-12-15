@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { parse } from 'query-string'
-import ListingFeed from '../components/ListingFeed'
+import HomeListingFeed from '../components/SubredditListingFeed'
 import ListingFeedToolbar from '../components/ListingFeedToolbar'
 import Nav from '../containers/Nav'
 import PageOuterContainer from '../components/PageOuterContainer'
@@ -60,7 +60,7 @@ class HomeMobileLayout extends React.PureComponent {
               sortingValue={this.state.sorting} 
               handleSorting={this.handleSorting} 
             />
-            <ListingFeed
+            <HomeListingFeed
               isFetching={this.props.isFetching}
               pages={this.props.pages}
               pageData={this.props.pageData}
