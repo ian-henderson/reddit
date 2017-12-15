@@ -19,7 +19,7 @@ const styles = {
   }
 }
 
-class Nav extends React.Component {
+class Nav extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = { open: false }
