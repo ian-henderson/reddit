@@ -12,7 +12,7 @@ const styles = {
     top: '0px'
   },
   appBarTitle: {
-    fontSize: '16px'
+    fontSize: '18px'
   },
   appBarDrawer: {
     fontFamily: "'Roboto Mono', monospace",
