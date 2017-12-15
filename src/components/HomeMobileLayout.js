@@ -1,5 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import { parse } from 'query-string'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import FontIcon from 'material-ui/FontIcon'
@@ -17,22 +18,23 @@ const styles = {
     maxWidth: '588px'
   },
   sortingLabel: {
+    fontSize: '10pt',
     paddingLeft: '8px',
     top: '-4px'
   },
   sortingIcon: {
     color: darkBlack,
-    fontSize: '15pt',
+    fontSize: '12pt',
     paddingLeft: '16px',
   },
   toolbar: {
     backgroundColor: 'inherit',
-    height: '46px',
+    height: '36px',
     top: '46px'
   }
 }
 
-class ListingsLayout extends React.PureComponent {
+class HomeMobileLayout extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = { sorting: null }
@@ -59,9 +61,18 @@ class ListingsLayout extends React.PureComponent {
   }
 
   render() {
+    let headTitle = 'reddit: the front page of the internet'
+    let navTitle = 'Home'
+    const { subreddit } = this.props.match.params
+    if (subreddit && subreddit === 'popular') {
+      headTitle = 'popular links'
+      navTitle = 'Popular'
+    }
+
     return (
       <div>
-        <Nav />
+        <Helmet><title>{headTitle}</title></Helmet>
+        <Nav title={navTitle} />
         <PageOuterContainer>
           <div style={styles.feed}>
             <Toolbar style={styles.toolbar}>
@@ -95,4 +106,4 @@ class ListingsLayout extends React.PureComponent {
   }
 }
 
-export default withRouter(ListingsLayout)
+export default withRouter(HomeMobileLayout)

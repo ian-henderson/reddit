@@ -49,7 +49,8 @@ const styles = {
     objectFit: 'cover'
   },
   cardText: {
-    padding: '0px 16px'
+    padding: '0px 16px',
+    overflowWrap: 'break-word'
   },
   cardTextCaption: {
     overflow: 'hidden',
@@ -109,18 +110,6 @@ const numberFilter = value => {
     : `${number}`
 }
 
-const Subtitle = props => {
-  const { subredditNamePrefixed, createdUtc, media, domain } = props.data
-  const timeAgo = moment.unix(createdUtc).fromNow()
-  return (
-    <div>
-      <Link to={`/${subredditNamePrefixed}`} style={styles.subtitleLink}>{subredditNamePrefixed}</Link>
-      {` • ${timeAgo}`}
-      {!media && domain ? ` • ${domain}` : null}
-    </div>
-  )
-}
-
 const ListingContent = props => {
   /*
   if (props.data.media && props.data.media.oembed) {
@@ -157,6 +146,18 @@ const ListingContent = props => {
   */
   // Basic Listing
   return <CardText style={styles.cardText}>{props.data.title}</CardText>
+}
+
+const Subtitle = props => {
+  const { subredditNamePrefixed, createdUtc, media, domain } = props.data
+  const timeAgo = moment.unix(createdUtc).fromNow()
+  return (
+    <div>
+      <Link to={`/${subredditNamePrefixed}`} style={styles.subtitleLink}>{subredditNamePrefixed}</Link>
+      {` • ${timeAgo}`}
+      {!media && domain ? ` • ${domain}` : null}
+    </div>
+  )
 }
 
 const Listing = props =>
