@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { parse } from 'query-string'
-import HomeMobileLayout from '../components/HomeMobileLayout'
-import SubredditMobileLayout from '../components/SubredditMobileLayout'
+import HomeLayout from '../components/HomeLayout'
+import SubredditLayout from '../components/SubredditLayout'
 import { loadListingsByEndpoint, loadSubredditInfo } from '../actions'
 import { listingsEndpoint } from '../utils'
 
@@ -25,10 +25,11 @@ class Listings extends React.Component {
       return this.props.history.push('/login')
     }
     // Loads initial listings based on the url and parameters.
-    this.boundActionCreators.loadListingsByEndpoint(listingsEndpoint(Object.assign({},
+    const endpoint = listingsEndpoint(Object.assign({},
       this.props.match.params,
       parse(this.props.location.search)
-    )))
+    ))
+    this.boundActionCreators.loadListingsByEndpoint(endpoint)
     // Loads subreddit data.
     const { subreddit } = this.props.match.params
     if (subreddit && subreddit !== 'popular') {
@@ -42,11 +43,12 @@ class Listings extends React.Component {
       if (bodyLargerThanView && closeToBottom) {
         const { pages } = this.props
         const lastPage = pages[pages.length - 1]
-        this.boundActionCreators.loadListingsByEndpoint(listingsEndpoint(Object.assign({},
+        const endpoint = listingsEndpoint(Object.assign({},
           this.props.match.params,
           parse(this.props.location.search),
           { after: lastPage.after }
-        )))
+        ))
+        this.boundActionCreators.loadListingsByEndpoint(endpoint)
       }
     })
     // Event listener which maps the page width to the component's state.
@@ -57,11 +59,12 @@ class Listings extends React.Component {
   componentWillReceiveProps(nextProps) {
     // If params change, then reload the new page's params and reset page count.
     if (this.props.match.params !== nextProps.match.params) {
-      this.boundActionCreators.loadListingsByEndpoint(listingsEndpoint(Object.assign({},
+      const endpoint = listingsEndpoint(Object.assign({},
         nextProps.match.params,
         parse(this.props.location.search)
-      )))
-      // Loads subreddit data.
+      ))
+      this.boundActionCreators.loadListingsByEndpoint(endpoint)
+      // Loads subreddit data (r/popular/about doesn't return subreddit info).
       const { subreddit } = nextProps.match.params
       if (subreddit && subreddit !== 'popular') {
         this.boundActionCreators.loadSubredditInfo(subreddit)
@@ -92,7 +95,7 @@ class Listings extends React.Component {
     const { subreddit } = this.props.match.params
     if (!subreddit || subreddit === 'popular') {
       return (
-        <HomeMobileLayout
+        <HomeLayout
           isFetching={this.props.isFetching}
           pageData={this.props.pageData}
           pages={this.props.pages}
@@ -102,7 +105,7 @@ class Listings extends React.Component {
 
     // Subreddit Layout
     return (
-      <SubredditMobileLayout
+      <SubredditLayout
         isFetching={this.props.isFetching}
         pageData={this.props.pageData}
         pages={this.props.pages}
@@ -127,37 +130,26 @@ const mapStateToProps = (state, ownProps) => {
   while (endpoint && listingsByEndpoint[endpoint]) {
     const page = listingsByEndpoint[endpoint]
     pages.push(page)
-    if (page.after) {
-      const nextPageParams = Object.assign({},
-        ownProps.match.params,
-        { after: page.after }
-      )
-      endpoint = listingsEndpoint(nextPageParams)
-    } else {
-      endpoint = null
-    }
+    endpoint = page.after
+      ? listingsEndpoint(Object.assign({},
+          ownProps.match.params,
+          { after: page.after }
+        ))
+      : null
   }
   // Aggregates the listings in the pageData array by page.
   let isFetching = false
-  let pageData = []
-  if (Object.keys(listings).length > 0) {
-    for (let page in pages) {
-      // Page is done loading
-      if (!pages[page].isFetching) {
-        const pageListings = pages[page].ids.map(id => listings[id])
-        for (let listing in pageListings) {
-          pageData.push(pageListings[listing])
-        }
-      } else {
-        // Page is loading
-        isFetching = true
-      }
+  const pageData = []
+  pages.forEach(page => {
+    isFetching = page.isFetching
+    if (!isFetching) {
+      // Page is done loading.
+      page.ids
+        .map(id => listings[id])
+        .forEach(listing => pageData.push(listing))
     }
-  }
-
+  })
   // Finds the subreddit data if applicable.
-  // This syntax is a little tricky, so
-  // TODO: Create a util function to simplify this.
   const { subreddit } = ownProps.match.params
   const subredditInfo = subreddit && subredditsInfo[subreddit.toLowerCase()]
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { parse } from 'query-string'
-import HomeListingFeed from '../components/SubredditListingFeed'
+import SubredditListingFeed from '../components/SubredditListingFeed'
 import ListingFeedToolbar from '../components/ListingFeedToolbar'
 import Nav from '../containers/Nav'
 import PageOuterContainer from '../components/PageOuterContainer'
@@ -15,14 +15,14 @@ const styles = {
   }
 }
 
-class HomeMobileLayout extends React.PureComponent {
+class SubredditLayout extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = { sorting: null }
     this.handleSorting = this.handleSorting.bind(this)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({ sorting: this.props.match.params.sorting || 'hot' })
   }
 
@@ -43,13 +43,11 @@ class HomeMobileLayout extends React.PureComponent {
 
   render() {
     let headTitle = 'reddit: the front page of the internet'
-    let navTitle = 'Home'
-    const { subreddit } = this.props.match.params
-    if (subreddit && subreddit === 'popular') {
-      headTitle = 'popular links'
-      navTitle = 'Popular'
+    let navTitle = 'reddit'
+    if (this.props.subredditInfo) {
+      headTitle = this.props.subredditInfo.title
+      navTitle = this.props.subredditInfo.displayNamePrefixed
     }
-
     return (
       <div>
         <Helmet><title>{headTitle}</title></Helmet>
@@ -60,7 +58,7 @@ class HomeMobileLayout extends React.PureComponent {
               sortingValue={this.state.sorting} 
               handleSorting={this.handleSorting} 
             />
-            <HomeListingFeed
+            <SubredditListingFeed
               isFetching={this.props.isFetching}
               pages={this.props.pages}
               pageData={this.props.pageData}
@@ -72,4 +70,4 @@ class HomeMobileLayout extends React.PureComponent {
   }
 }
 
-export default withRouter(HomeMobileLayout)
+export default withRouter(SubredditLayout)

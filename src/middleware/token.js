@@ -21,12 +21,10 @@ export default store => next => action => {
           grantType: 'refresh_token',
           refreshToken
         }).then(response => {
-            const camelizedJson = camelizeKeys(response.data)
             localStorage.setItem('lastUpdated', Date.now() / 1000)
-            for (let i in camelizedJson) {
-              localStorage.setItem(i, camelizedJson[i])
-            }
-            store.dispatch({ type: ActionCreators.FETCH_TOKEN_SUCCESS, payload: camelizedJson })
+            const payload = camelizeKeys(response.data)
+            for (let i in payload) localStorage.setItem(i, payload[i])
+            store.dispatch({ type: ActionCreators.FETCH_TOKEN_SUCCESS, payload })
             next(action)
           })
           .catch(error => {
@@ -37,6 +35,8 @@ export default store => next => action => {
         throw new Error('Missing refresh token')
       }
     }
+
+    // TODO: Possibly logout by deleting token here?
   }
 
   return next(action)

@@ -47,9 +47,9 @@ const mapStateToProps = (state, ownProps) => {
     entities: { listings }, 
     auth: { isAuthenticated }
   } = state
-  const { id } = ownProps.match.params
+  const listing = listings[ownProps.match.params.id]
 
-  return { isAuthenticated, listing: listings[id] }
+  return { isAuthenticated, listing }
 }
 
 export default withRouter(connect(mapStateToProps)(Listing))

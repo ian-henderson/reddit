@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { parse } from 'query-string'
-import SubredditListingFeed from '../components/SubredditListingFeed'
+import HomeListingFeed from '../components/SubredditListingFeed'
 import ListingFeedToolbar from '../components/ListingFeedToolbar'
 import Nav from '../containers/Nav'
 import PageOuterContainer from '../components/PageOuterContainer'
@@ -15,14 +15,14 @@ const styles = {
   }
 }
 
-class SubredditMobileLayout extends React.PureComponent {
+class HomeLayout extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = { sorting: null }
     this.handleSorting = this.handleSorting.bind(this)
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({ sorting: this.props.match.params.sorting || 'hot' })
   }
 
@@ -43,11 +43,13 @@ class SubredditMobileLayout extends React.PureComponent {
 
   render() {
     let headTitle = 'reddit: the front page of the internet'
-    let navTitle = 'reddit'
-    if (this.props.subredditInfo) {
-      headTitle = this.props.subredditInfo.title
-      navTitle = this.props.subredditInfo.displayNamePrefixed
+    let navTitle = 'Home'
+    const { subreddit } = this.props.match.params
+    if (subreddit && subreddit === 'popular') {
+      headTitle = 'popular links'
+      navTitle = 'Popular'
     }
+
     return (
       <div>
         <Helmet><title>{headTitle}</title></Helmet>
@@ -58,7 +60,7 @@ class SubredditMobileLayout extends React.PureComponent {
               sortingValue={this.state.sorting} 
               handleSorting={this.handleSorting} 
             />
-            <SubredditListingFeed
+            <HomeListingFeed
               isFetching={this.props.isFetching}
               pages={this.props.pages}
               pageData={this.props.pageData}
@@ -70,4 +72,4 @@ class SubredditMobileLayout extends React.PureComponent {
   }
 }
 
-export default withRouter(SubredditMobileLayout)
+export default withRouter(HomeLayout)
