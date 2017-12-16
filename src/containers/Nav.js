@@ -7,15 +7,8 @@ import { List, ListItem } from 'material-ui/List'
 
 const styles = {
   appBar: {
-    fontFamily: "'Roboto Mono', monospace",
     position: 'fixed',
     top: '0px'
-  },
-  appBarTitle: {
-    fontSize: '18px'
-  },
-  appBarDrawer: {
-    fontFamily: "'Roboto Mono', monospace",
   }
 }
 
@@ -41,7 +34,6 @@ class Nav extends React.PureComponent {
       <div>
         <AppBar
           style={styles.appBar}
-          titleStyle={styles.appBarTitle}
           title={this.props.title}
           onLeftIconButtonTouchTap={this.handleToggle}
         />
@@ -52,8 +44,6 @@ class Nav extends React.PureComponent {
           onRequestChange={open => this.setState({ open })}>
           <div>
             <AppBar
-              style={styles.appBarDrawer}
-              titleStyle={styles.appBarTitle}
               title='reddit'
               onLeftIconButtonTouchTap={this.handleToggle}
             />

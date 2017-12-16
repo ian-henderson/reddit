@@ -11,7 +11,7 @@ const styles = {
     textAlign: 'center'
   },
   circularProgress: {
-    margin: '20px auto'
+    margin: '15px auto'
   }
 }
 
@@ -20,7 +20,7 @@ const Loading = () =>
     <Divider />
     <CircularProgress
       style={styles.circularProgress}
-      size={30}
+      size={25}
       thickness={3.0}
     />
     <Divider />
