@@ -44,7 +44,7 @@ class Nav extends React.PureComponent {
           onRequestChange={open => this.setState({ open })}>
           <div>
             <AppBar
-              title='reddit'
+              title='Reddit'
               onLeftIconButtonTouchTap={this.handleToggle}
             />
             <List>
