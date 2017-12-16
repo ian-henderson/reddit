@@ -49,6 +49,7 @@ const styles = {
     objectFit: 'cover'
   },
   cardText: {
+    fontWeight: 'bold',
     padding: '0px 16px',
     overflowWrap: 'break-word'
   },
