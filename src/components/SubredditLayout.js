@@ -43,7 +43,7 @@ class SubredditLayout extends React.PureComponent {
 
   render() {
     let headTitle = 'reddit: the front page of the internet'
-    let navTitle = 'reddit'
+    let navTitle = null
     if (this.props.subredditInfo) {
       headTitle = this.props.subredditInfo.title
       navTitle = this.props.subredditInfo.displayNamePrefixed

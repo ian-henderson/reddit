@@ -1,14 +1,18 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import AppBar from 'material-ui/AppBar'
-import Divider from 'material-ui/Divider'
 import Drawer from 'material-ui/Drawer'
 import { List, ListItem } from 'material-ui/List'
+import { grey300 } from 'material-ui/styles/colors'
 
 const styles = {
   appBar: {
     position: 'fixed',
     top: '0px'
+  },
+  drawerAppBar: {
+    borderBottom: `1px solid ${grey300}`,
+    boxShadow: 'none'
   }
 }
 
@@ -44,6 +48,8 @@ class Nav extends React.PureComponent {
           onRequestChange={open => this.setState({ open })}>
           <div>
             <AppBar
+              style={styles.drawerAppBar}
+              showMenuIconButton={false}
               title='Reddit'
               onLeftIconButtonTouchTap={this.handleToggle}
             />
@@ -51,7 +57,6 @@ class Nav extends React.PureComponent {
               <ListItem primaryText='Home' onClick={() => this.goTo('/')} />
               <ListItem primaryText='Popular' onClick={() => this.goTo('/r/popular')} />
               <ListItem primaryText='Subscriptions' disabled={true} />
-              <Divider />
               <ListItem primaryText='Log out' disabled={true} />
             </List>
           </div>
