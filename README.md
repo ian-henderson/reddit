@@ -4,9 +4,10 @@ Reddit Browser is a progressive web app for browsing Reddit using [Reddit's Publ
 
 The minimal viable product includes 
 * User authentication 
-* Home/Subreddit feeds 
+* Home/Subreddit feeds with infinite scrolling
 * Listing/Comment views
 * Voting on comments and posts
+* Parity with Reddit's routes
 
 
 ## Installation
@@ -24,7 +25,7 @@ npm install
 2. Create an app under the "developed applications" heading [here](https://www.reddit.com/prefs/apps).
 
 
-## Environment
+## Environment Variables
 
 Once the app is registered, create a file named `.env.development.local` in the top directory using the client id and secret associated with your app.
 
@@ -42,3 +43,8 @@ npm start
 ```
 
 This will start a hot loading local development server at `localhost:3000`.
+
+
+## Documentation
+
+* [Introduction](docs/introduction/index.md)
