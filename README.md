@@ -21,7 +21,7 @@ npm install
 
 ## Reddit App Registration for Local Developement
 
-1. Sign into reddit.com
+1. Sign into [reddit](reddit.com).
 2. Create an app under the "developed applications" heading [here](https://www.reddit.com/prefs/apps).
 
 
