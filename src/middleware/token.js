@@ -13,7 +13,6 @@ export default store => next => action => {
     const now = Date.now() / 1000
     const expired = lastUpdated && expiresIn && now > (Number(lastUpdated) + Number(expiresIn))
 
-    // Refresh access token if expired.
     if (expired) {
       if (refreshToken) {
         store.dispatch({ type: ActionCreators.FETCH_TOKEN_REQUEST })
@@ -35,8 +34,6 @@ export default store => next => action => {
         throw new Error('Missing refresh token')
       }
     }
-
-    // TODO: Possibly logout by deleting token here?
   }
 
   return next(action)

@@ -17,21 +17,24 @@ const fetchListings = (endpoint, schema) => ({
 })
 
 export const loadListingsByEndpoint = endpoint => (dispatch, getState) => {
-  if (getState().pagination.listingsByEndpoint[endpoint]) {
-    return null
-  }
+  if (getState().pagination.listingsByEndpoint[endpoint]) return null
 
   return dispatch(fetchListings(endpoint, Schemas.LISTINGS))
 }
 
 export const loadListingsByName = (prefix, names) => (dispatch, getState) => {
   const { listings } = getState().entities
-  const namesToLoad = []
-  for (let name in names) {
-    if (!listings[names[name]]) namesToLoad.push(names[name])
-  }
+
+  // Filters out listings that are already loaded.
+  const namesToLoad = names.filter(name => 
+    listings[name.toLowerCase()] ? null : name.toLowerCase())
+  // Exits if no listings need to be loaded.
   if (namesToLoad.length === 0) return null
-  const endpoint = '/by_id/' + namesToLoad.map(name => prefix + name)
+  const endpoint = '/by_id/' + namesToLoad.map((name, index) => {
+    let id = prefix + name
+    if (index !== namesToLoad.length - 1) id += ','
+    return id
+  })
 
   return dispatch(fetchListings(endpoint, Schemas.LISTINGS))
 }

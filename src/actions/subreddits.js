@@ -17,6 +17,9 @@ const fetchSubredditInfo = (endpoint, schema) => ({
 })
 
 export const loadSubredditInfo = subreddit => (dispatch, getState) => {
+  const { subredditsInfo } = getState().entities
+
+  if (subredditsInfo[subreddit.toLowerCase()]) return null
   const endpoint = `/r/${subreddit.toLowerCase()}/about`
 
   return dispatch(fetchSubredditInfo(endpoint, Schemas.SUBREDDIT_INFO))
