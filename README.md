@@ -10,7 +10,9 @@ The minimal viable product includes
 * Parity with Reddit's routes
 
 
-## Installation
+## Local Development
+
+### Installation
 
 ```
 git clone https://github.com/ian-henderson/reddit
@@ -18,14 +20,12 @@ cd reddit
 npm install
 ```
 
-
-## Reddit App Registration for Local Developement
+### Reddit App Registration 
 
 1. Sign into [reddit](https://reddit.com).
 2. Create an app under the "developed applications" heading [here](https://www.reddit.com/prefs/apps).
 
-
-## Environment Variables
+### Environment Variables
 
 Once the app is registered, create a file named `.env.development.local` in the top directory using the client id and secret associated with your app.
 
@@ -36,14 +36,18 @@ REACT_APP_REDIRECT_URI=http://localhost:3000/login
 REACT_APP_SECRET=<your app client secret here>
 ```
 
+### Development Server
 
-## Development Server
+This command will start a hot loading local development server at `localhost:3000`.
 
 ```
 npm start
 ```
 
-This will start a hot loading local development server at `localhost:3000`.
+### Development Tools
+
+* React Developer Tools [[Chrome]](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) [[Firefox]](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/)
+* Redux DevTools [[Chrome]](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) [[Firefox]](https://addons.mozilla.org/en-US/firefox/addon/remotedev/)
 
 
 ## Documentation

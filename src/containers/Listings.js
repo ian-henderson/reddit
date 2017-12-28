@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
 import { parse } from 'query-string'
-import HomeLayout from '../components/HomeLayout'
-import SubredditLayout from '../components/SubredditLayout'
+import ListingsLayout from '../components/ListingsLayout'
 import { loadListingsByEndpoint, loadSubredditInfo } from '../actions'
 import { listingsEndpoint } from '../utils'
 
@@ -81,31 +80,8 @@ class Listings extends React.Component {
   }
 
   render() {
-    /*
-     * Breakpoint Widths
-     * 1. Mobile: smaller than or equal to 768px.
-     * 2. Small devices: Larger than 768px.
-     * 3. Medium devices: Larger than 992px.
-     * 4. Large devices: Larger than 1200px.
-     * 
-     * TODO: Create Home & Subreddit layouts for each width.
-     */
-
-    // Home Layout
-    const { subreddit } = this.props.match.params
-    if (!subreddit || subreddit === 'popular') {
-      return (
-        <HomeLayout
-          isFetching={this.props.isFetching}
-          pageData={this.props.pageData}
-          pages={this.props.pages}
-        />
-      )
-    }   
-
-    // Subreddit Layout
     return (
-      <SubredditLayout
+      <ListingsLayout
         isFetching={this.props.isFetching}
         pageData={this.props.pageData}
         pages={this.props.pages}
@@ -121,6 +97,7 @@ const mapStateToProps = (state, ownProps) => {
     pagination: { listingsByEndpoint },
     entities: { listings, subredditsInfo }
   } = state
+
   // Populates pages array.
   const pages = []
   let endpoint = listingsEndpoint(Object.assign({},
@@ -130,25 +107,29 @@ const mapStateToProps = (state, ownProps) => {
   while (endpoint && listingsByEndpoint[endpoint]) {
     const page = listingsByEndpoint[endpoint]
     pages.push(page)
-    endpoint = page.after
-      ? listingsEndpoint(Object.assign({},
-          ownProps.match.params,
-          { after: page.after }
-        ))
-      : null
+    if (page.after) {
+      endpoint = listingsEndpoint(Object.assign({},
+        ownProps.match.params,
+        { after: page.after }
+      ))
+    } else {
+      endpoint = null
+    }
   }
+
   // Aggregates the listings in the pageData array by page.
   let isFetching = false
   const pageData = []
   pages.forEach(page => {
     isFetching = page.isFetching
+    // When page is done loading, include the page's listing in pageData array.
     if (!isFetching) {
-      // Page is done loading.
       page.ids
         .map(id => listings[id])
         .forEach(listing => pageData.push(listing))
     }
   })
+
   // Finds the subreddit data if applicable.
   const { subreddit } = ownProps.match.params
   const subredditInfo = subreddit && subredditsInfo[subreddit.toLowerCase()]

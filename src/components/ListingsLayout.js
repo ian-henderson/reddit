@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { parse } from 'query-string'
-import SubredditListingFeed from '../components/SubredditListingFeed'
+import ListingFeed from '../components/ListingFeed'
 import ListingFeedToolbar from '../components/ListingFeedToolbar'
 import Nav from '../containers/Nav'
 import PageOuterContainer from '../components/PageOuterContainer'
@@ -15,7 +15,7 @@ const styles = {
   }
 }
 
-class SubredditLayout extends React.PureComponent {
+class HomeLayout extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = { sorting: null }
@@ -42,12 +42,24 @@ class SubredditLayout extends React.PureComponent {
   }
 
   render() {
+    /* Navbar Title & Header Tag */
+
+    // Home Case
     let headTitle = 'reddit: the front page of the internet'
-    let navTitle = null
+    let navTitle = 'Home'
+
+    // Popular Case
+    if (this.props.match.params.subreddit === 'popular') {
+      headTitle = 'popular links'
+      navTitle = 'Popular'
+    }
+
+    // Subreddit Case
     if (this.props.subredditInfo) {
       headTitle = this.props.subredditInfo.title
       navTitle = this.props.subredditInfo.displayNamePrefixed
     }
+
     return (
       <div>
         <Helmet><title>{headTitle}</title></Helmet>
@@ -58,7 +70,7 @@ class SubredditLayout extends React.PureComponent {
               sortingValue={this.state.sorting} 
               handleSorting={this.handleSorting} 
             />
-            <SubredditListingFeed
+            <ListingFeed
               isFetching={this.props.isFetching}
               pages={this.props.pages}
               pageData={this.props.pageData}
@@ -70,4 +82,4 @@ class SubredditLayout extends React.PureComponent {
   }
 }
 
-export default withRouter(SubredditLayout)
+export default withRouter(HomeLayout)
