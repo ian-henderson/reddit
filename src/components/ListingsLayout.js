@@ -1,9 +1,9 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
+import { withRouter } from 'react-router-dom'
 import { parse } from 'query-string'
 import ListingsFeed from '../components/ListingsFeed'
-import ListingFeedToolbar from '../components/ListingFeedToolbar'
+import ListingsFeedToolbar from '../components/ListingsFeedToolbar'
 import PageOuterContainer from '../components/PageOuterContainer'
 import Nav from '../containers/Nav'
 import { listingsEndpoint } from '../utils'
@@ -66,7 +66,7 @@ class ListingsLayout extends React.PureComponent {
         <Nav title={navTitle} />
         <PageOuterContainer>
           <div style={styles.feed}>
-            <ListingFeedToolbar 
+            <ListingsFeedToolbar 
               sortingValue={this.state.sorting} 
               handleSorting={this.handleSorting} 
             />
