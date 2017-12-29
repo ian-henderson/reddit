@@ -1,18 +1,18 @@
 import React from 'react'
 import Divider from 'material-ui/Divider'
-import Listing from './Listing'
+import ListingsFeedItem from './ListingsFeedItem'
 import Loading from './Loading'
 
-const ListingFeed = props =>
+const ListingsFeed = props =>
   <div>
     <Divider />
     {props.pageData.map((listing, index) =>
       <div key={index}>
-        <Listing data={listing.data} />
+        <ListingsFeedItem data={listing.data} />
         <Divider />
       </div>
     )}
     {props.isFetching && <Loading />}
   </div>
 
-export default ListingFeed
+export default ListingsFeed

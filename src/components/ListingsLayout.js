@@ -2,10 +2,10 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { parse } from 'query-string'
-import ListingFeed from '../components/ListingFeed'
+import ListingsFeed from '../components/ListingsFeed'
 import ListingFeedToolbar from '../components/ListingFeedToolbar'
-import Nav from '../containers/Nav'
 import PageOuterContainer from '../components/PageOuterContainer'
+import Nav from '../containers/Nav'
 import { listingsEndpoint } from '../utils'
 
 const styles = {
@@ -15,7 +15,7 @@ const styles = {
   }
 }
 
-class HomeLayout extends React.PureComponent {
+class ListingsLayout extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = { sorting: null }
@@ -70,9 +70,8 @@ class HomeLayout extends React.PureComponent {
               sortingValue={this.state.sorting} 
               handleSorting={this.handleSorting} 
             />
-            <ListingFeed
+            <ListingsFeed
               isFetching={this.props.isFetching}
-              pages={this.props.pages}
               pageData={this.props.pageData}
             />
           </div>
@@ -82,4 +81,4 @@ class HomeLayout extends React.PureComponent {
   }
 }
 
-export default withRouter(HomeLayout)
+export default withRouter(ListingsLayout)

@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
 import { parse } from 'query-string'
-import ListingsLayout from '../components/ListingsLayout'
 import { loadListingsByEndpoint, loadSubredditInfo } from '../actions'
+import ListingsLayout from '../components/ListingsLayout'
 import { listingsEndpoint } from '../utils'
 
 class Listings extends React.Component {
@@ -84,7 +84,6 @@ class Listings extends React.Component {
       <ListingsLayout
         isFetching={this.props.isFetching}
         pageData={this.props.pageData}
-        pages={this.props.pages}
         subredditInfo={this.props.subredditInfo}
       />
     )
@@ -134,13 +133,7 @@ const mapStateToProps = (state, ownProps) => {
   const { subreddit } = ownProps.match.params
   const subredditInfo = subreddit && subredditsInfo[subreddit.toLowerCase()]
 
-  return {
-    isAuthenticated,
-    isFetching,
-    pageData,
-    pages,
-    subredditInfo
-  }
+  return { isAuthenticated, isFetching, pageData, pages, subredditInfo }
 }
 
 export default withRouter(connect(mapStateToProps)(Listings))

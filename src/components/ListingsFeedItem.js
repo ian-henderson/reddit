@@ -154,14 +154,16 @@ const Subtitle = props => {
   const timeAgo = moment.unix(createdUtc).fromNow()
   return (
     <div>
-      <Link to={`/${subredditNamePrefixed}`} style={styles.subtitleLink}>{subredditNamePrefixed}</Link>
+      <Link to={`/${subredditNamePrefixed}`} style={styles.subtitleLink}>
+        {subredditNamePrefixed}
+      </Link>
       {` • ${timeAgo}`}
       {!media && domain ? ` • ${domain}` : null}
     </div>
   )
 }
 
-const HomeListing = props =>
+const ListingsFeedItem = props =>
   <Card style={styles.card}>
     {/* Header */}
     <CardHeader
@@ -208,4 +210,4 @@ const HomeListing = props =>
     </CardActions>
   </Card>
 
-export default HomeListing
+export default ListingsFeedItem
