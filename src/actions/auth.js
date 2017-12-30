@@ -56,15 +56,21 @@ export const initializeToken = code => dispatch => {
     grantType: 'authorization_code',
     redirectURI: process.env.REACT_APP_REDIRECT_URI,
     code
-  }).then(response => {
-      const camelizedJson = camelizeKeys(response.data)
-      localStorage.setItem('lastUpdated', Date.now() / 1000)
-      for (let i in camelizedJson) {
-        localStorage.setItem(i, camelizedJson[i])
-      }
-      dispatch({ type: FETCH_TOKEN_SUCCESS, payload: camelizedJson })
-    })
-    .catch(error => {
-      dispatch({ type: FETCH_TOKEN_FAILURE, error })
-    })
+  })
+  .then(response => {
+    const camelizedJson = camelizeKeys(response.data)
+    localStorage.setItem('lastUpdated', Date.now() / 1000)
+    for (let i in camelizedJson) localStorage.setItem(i, camelizedJson[i])
+    dispatch({ type: FETCH_TOKEN_SUCCESS, payload: camelizedJson })
+  })
+  .catch(error => {
+    dispatch({ type: FETCH_TOKEN_FAILURE, error })
+  })
+}
+
+export const LOGOUT = 'LOGOUT'
+
+export const logOut = () => dispatch => {
+  localStorage.clear()
+  dispatch({ type: LOGOUT })
 }

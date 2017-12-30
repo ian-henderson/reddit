@@ -15,14 +15,10 @@ class Listings extends React.Component {
       { loadListingsByEndpoint, loadSubredditInfo }, 
       props.dispatch
     )
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
 
   componentDidMount() {
-    // Redirects to Login if unauthenticated.
-    if (!this.props.isAuthenticated) {
-      return this.props.history.push('/login')
-    }
     // Loads initial listings based on the url and parameters.
     const endpoint = listingsEndpoint(Object.assign({},
       this.props.match.params,
@@ -92,7 +88,6 @@ class Listings extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   const {
-    auth: { isAuthenticated },
     pagination: { listingsByEndpoint },
     entities: { listings, subredditsInfo }
   } = state
@@ -121,7 +116,6 @@ const mapStateToProps = (state, ownProps) => {
   const pageData = []
   pages.forEach(page => {
     isFetching = page.isFetching
-    // When page is done loading, include the page's listing in pageData array.
     if (!isFetching) {
       page.ids
         .map(id => listings[id])
@@ -133,7 +127,7 @@ const mapStateToProps = (state, ownProps) => {
   const { subreddit } = ownProps.match.params
   const subredditInfo = subreddit && subredditsInfo[subreddit.toLowerCase()]
 
-  return { isAuthenticated, isFetching, pageData, pages, subredditInfo }
+  return { isFetching, pageData, pages, subredditInfo }
 }
 
 export default withRouter(connect(mapStateToProps)(Listings))

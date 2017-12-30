@@ -1,9 +1,12 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
 import { List, ListItem } from 'material-ui/List'
 import { grey300 } from 'material-ui/styles/colors'
+import { logOut } from '../actions'
 
 const styles = {
   appBar: {
@@ -16,12 +19,14 @@ const styles = {
   }
 }
 
-class Nav extends React.PureComponent {
+class Nav extends React.Component {
   constructor(props) {
     super(props)
     this.state = { open: false }
+    this.boundActionCreators = bindActionCreators({ logOut }, props.dispatch)
     this.goTo = this.goTo.bind(this)
     this.handleToggle = this.handleToggle.bind(this)
+    this.logOut = this.logOut.bind(this)
   }
 
   goTo(target) {
@@ -31,6 +36,19 @@ class Nav extends React.PureComponent {
 
   handleToggle() {
     this.setState({ open: !this.state.open })
+  }
+
+  logOut() {
+    this.handleToggle()
+    this.boundActionCreators.logOut()
+  }
+
+  componentDidMount() {
+    if (!this.props.isAuthenticated) this.props.history.push('/login')
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.isAuthenticated) this.props.history.push('/login')
   }
 
   render() {
@@ -56,8 +74,7 @@ class Nav extends React.PureComponent {
             <List>
               <ListItem primaryText='Home' onClick={() => this.goTo('/')} />
               <ListItem primaryText='Popular' onClick={() => this.goTo('/r/popular')} />
-              <ListItem primaryText='Subscriptions' disabled={true} />
-              <ListItem primaryText='Log out' disabled={true} />
+              <ListItem primaryText='Log out' onClick={this.logOut} />
             </List>
           </div>
         </Drawer>
@@ -66,4 +83,6 @@ class Nav extends React.PureComponent {
   }
 }
 
-export default withRouter(Nav)
+const mapStateToProps = state => ({ isAuthenticated: state.auth.isAuthenticated })
+
+export default withRouter(connect(mapStateToProps)(Nav))

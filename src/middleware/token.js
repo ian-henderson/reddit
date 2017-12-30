@@ -9,7 +9,9 @@ import * as ActionCreators from '../actions'
 // tl;dr: All functions are API calls.
 export default store => next => action => {
   if (typeof action === 'function') {
-    const { refreshToken, lastUpdated, expiresIn } = store.getState().auth
+    const expiresIn = localStorage.getItem('expiresIn')
+    const lastUpdated = localStorage.getItem('lastUpdated')
+    const refreshToken = localStorage.getItem('refreshToken')
     const now = Date.now() / 1000
     const expired = lastUpdated && expiresIn && now > (Number(lastUpdated) + Number(expiresIn))
 

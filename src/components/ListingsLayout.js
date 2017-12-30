@@ -60,6 +60,8 @@ class ListingsLayout extends React.PureComponent {
       navTitle = this.props.subredditInfo.displayNamePrefixed
     }
 
+    const isSubreddit = Boolean(this.props.match.params.subreddit)
+
     return (
       <div>
         <Helmet><title>{headTitle}</title></Helmet>
@@ -72,6 +74,7 @@ class ListingsLayout extends React.PureComponent {
             />
             <ListingsFeed
               isFetching={this.props.isFetching}
+              isSubreddit={isSubreddit}
               pageData={this.props.pageData}
             />
           </div>

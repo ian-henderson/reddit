@@ -8,7 +8,10 @@ const ListingsFeed = props =>
     <Divider />
     {props.pageData.map((listing, index) =>
       <div key={index}>
-        <ListingsFeedItem data={listing.data} />
+        <ListingsFeedItem 
+          data={listing.data} 
+          isSubreddit={props.isSubreddit}
+        />
         <Divider />
       </div>
     )}
