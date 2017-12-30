@@ -106,9 +106,7 @@ const fontIcon = name =>
 
 const numberFilter = value => {
   const number = Number(value)
-  return number >= 1000
-    ? `${(number / 1000).toFixed(1)}k`
-    : `${number}`
+  return number >= 1000 ? `${(number / 1000).toFixed(1)}k` : `${number}`
 }
 
 const ListingContent = props => {
@@ -150,15 +148,19 @@ const ListingContent = props => {
 }
 
 const Subtitle = props => {
-  const { subredditNamePrefixed, createdUtc, media, domain } = props.data
-  const timeAgo = moment.unix(createdUtc).fromNow()
+  const { data, isSubreddit } = props
+  const timeAgo = moment.unix(data.createdUtc).fromNow()
+
   return (
     <div>
-      <Link to={`/${subredditNamePrefixed}`} style={styles.subtitleLink}>
-        {subredditNamePrefixed}
-      </Link>
+      {props.isSubreddit
+        ? `u/${data.author}`
+        : <Link to={`/${data.subredditNamePrefixed}`} style={styles.subtitleLink}>
+            {data.subredditNamePrefixed}
+          </Link>
+      }
       {` • ${timeAgo}`}
-      {!media && domain ? ` • ${domain}` : null}
+      {!data.media && data.domain ? ` • ${data.domain}` : null}
     </div>
   )
 }
@@ -169,7 +171,7 @@ const ListingsFeedItem = props =>
     <CardHeader
       iconStyle={styles.cardHeaderIcon}
       style={styles.cardHeader}
-      subtitle={<Subtitle data={props.data} />}
+      subtitle={<Subtitle data={props.data} isSubreddit={props.isSubreddit} />}
       textStyle={styles.cardHeaderText} />
     {/* Listing Title */}
     <Link to={props.data.permalink} style={styles.listingContentLink}>
@@ -179,7 +181,7 @@ const ListingsFeedItem = props =>
       <div style={styles.buttonSection}>
         {/* Vote Buttons */}
         <FlatButton
-          disableTouchRipple
+          disableTouchRipple={true}
           hoverColor={white}
           icon={fontIcon('arrow_upward')}
           label={props.data.score > 1
@@ -188,7 +190,8 @@ const ListingsFeedItem = props =>
           labelStyle={styles.voteButtonText}
           style={styles.voteButton}
         />
-        <FlatButton disableTouchRipple
+        <FlatButton 
+          disableTouchRipple={true}
           hoverColor={white}
           icon={fontIcon('arrow_downward')}
           style={styles.voteButton}
