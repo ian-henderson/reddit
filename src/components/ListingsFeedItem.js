@@ -148,19 +148,17 @@ const ListingContent = props => {
 }
 
 const Subtitle = props => {
-  const { data, isSubreddit } = props
-  const timeAgo = moment.unix(data.createdUtc).fromNow()
-
+  const timeAgo = moment.unix(props.data.createdUtc).fromNow()
   return (
     <div>
       {props.isSubreddit
-        ? `u/${data.author}`
-        : <Link to={`/${data.subredditNamePrefixed}`} style={styles.subtitleLink}>
-            {data.subredditNamePrefixed}
+        ? `u/${props.data.author}`
+        : <Link to={`/${props.data.subredditNamePrefixed}`} style={styles.subtitleLink}>
+            {props.data.subredditNamePrefixed}
           </Link>
       }
       {` • ${timeAgo}`}
-      {!data.media && data.domain ? ` • ${data.domain}` : null}
+      {!props.data.media && props.data.domain ? ` • ${props.data.domain}` : null}
     </div>
   )
 }
