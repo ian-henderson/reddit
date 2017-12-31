@@ -31,12 +31,9 @@ class Listings extends React.Component {
       this.boundActionCreators.loadSubredditInfo(subreddit)
     }
 
-    // Event listener which loads next page when two page lengths away from bottom.
-    window.addEventListener('scroll', this.infiniteScrolling)
-    
-    // Event listener which maps the page width to the component's state.
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
+    window.addEventListener('scroll', this.infiniteScrolling)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -121,16 +118,14 @@ const mapStateToProps = (state, ownProps) => {
   const pageData = []
   pages.forEach(page => {
     isFetching = page.isFetching
-    if (!isFetching) {
-      page.ids
-        .map(id => listings[id])
-        .forEach(listing => pageData.push(listing))
-    }
+    if (!isFetching) page.ids
+      .map(id => listings[id])
+      .forEach(listing => pageData.push(listing))
   })
 
   // Finds the subreddit data if applicable.
-  const subreddit = ownProps.match.params.subreddit.toLowerCase()
-  const subredditInfo = subreddit && subredditsInfo[subreddit]
+  const { subreddit } = ownProps.match.params
+  const subredditInfo = subreddit && subredditsInfo[subreddit.toLowerCase()]
 
   return { isFetching, pageData, pages, subredditInfo }
 }

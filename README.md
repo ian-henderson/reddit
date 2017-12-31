@@ -48,12 +48,3 @@ npm start
 
 * React Developer Tools [[Chrome]](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi) [[Firefox]](https://addons.mozilla.org/en-US/firefox/addon/react-devtools/)
 * Redux DevTools [[Chrome]](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) [[Firefox]](https://addons.mozilla.org/en-US/firefox/addon/remotedev/)
-
-
-## Documentation
-
-### Introduction
-
-#### Motivation
-
-I began really using computers as a high school kid in the late 2000's when sites like Facebook and Twitter were first gaining momentum. What really struck high school me is how in a matter of seconds these sites could load, manage, and display such large swaths of data within my browser. 
