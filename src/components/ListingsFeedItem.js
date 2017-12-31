@@ -4,7 +4,7 @@ import moment from 'moment'
 import Card, { CardActions, CardHeader, CardText } from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
 import FontIcon from 'material-ui/FontIcon'
-import { grey300, grey600, white } from 'material-ui/styles/colors'
+import { grey600, white } from 'material-ui/styles/colors'
 
 const styles = {
   buttonSection: {

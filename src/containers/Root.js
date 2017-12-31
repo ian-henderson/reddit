@@ -12,12 +12,12 @@ const Root = ({ store }) =>
   <Provider store={store}>
     <MuiThemeProvider muiTheme={theme}>
       <Switch>
-        <Route path="/login" component={Login}/>
-        <Route exact path="/" component={Listings}/>
-        <Route path="/r/:subreddit/comments/:id/:slug" component={Listing}/>
-        <Route path="/r/:subreddit/:sorting" component={Listings}/>
-        <Route path="/r/:subreddit" component={Listings}/>
-        <Route path="/:sorting" component={Listings}/>
+        <Route path="/login" component={Login} />
+        <Route exact path="/" component={Listings} />
+        <Route path="/r/:subreddit/comments/:id/:slug" component={Listing} />
+        <Route path="/r/:subreddit/:sorting" component={Listings} />
+        <Route path="/r/:subreddit" component={Listings} />
+        <Route path="/:sorting" component={Listings} />
       </Switch>
     </MuiThemeProvider>
   </Provider>

@@ -16,14 +16,7 @@ class Listing extends React.Component {
   }
 
   componentDidMount() {
-    // Redirects to Login if unauthenticated.
-    if (!this.props.isAuthenticated) {
-      return this.props.history.push('/login')
-    }
-    // Loads the listing.
-    this.boundActionCreators.loadListingsByName('t3_', [
-      this.props.match.params.id
-    ])
+    this.boundActionCreators.loadListingsByName('t3_', [this.props.match.params.id])
   }
 
   render() {
@@ -36,17 +29,14 @@ class Listing extends React.Component {
               : 'r/' + this.props.match.params.subreddit}
           </title>
         </Helmet>
-        <ListingLayout />
+        <ListingLayout data={this.props.listing} />
       </div>
     )
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { 
-    entities: { listings }, 
-    auth: { isAuthenticated }
-  } = state
+  const { entities: { listings }, auth: { isAuthenticated } } = state
   const listing = listings[ownProps.match.params.id]
 
   return { isAuthenticated, listing }
