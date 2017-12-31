@@ -12,9 +12,8 @@ class Listings extends React.Component {
     super(props)
     this.state = { height: 0, width: 0 }
     this.boundActionCreators = bindActionCreators(
-      { loadListingsByEndpoint, loadSubredditInfo }, 
-      props.dispatch
-    )
+      { loadListingsByEndpoint, loadSubredditInfo }, props.dispatch)
+    this.infiniteScrolling = this.infiniteScrolling.bind(this)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
 
@@ -25,27 +24,16 @@ class Listings extends React.Component {
       parse(this.props.location.search)
     ))
     this.boundActionCreators.loadListingsByEndpoint(endpoint)
+
     // Loads subreddit data.
     const { subreddit } = this.props.match.params
     if (subreddit && subreddit !== 'popular') {
       this.boundActionCreators.loadSubredditInfo(subreddit)
     }
+
     // Event listener which loads next page when two page lengths away from bottom.
-    document.addEventListener('scroll', event => {
-      const { body } = event.srcElement || event.originalTarget
-      const bodyLargerThanView = body.offsetHeight > window.innerHeight
-      const closeToBottom = window.scrollY > (body.offsetHeight - (2 * window.innerHeight))
-      if (bodyLargerThanView && closeToBottom) {
-        const { pages } = this.props
-        const lastPage = pages[pages.length - 1]
-        const endpoint = listingsEndpoint(Object.assign({},
-          this.props.match.params,
-          parse(this.props.location.search),
-          { after: lastPage.after }
-        ))
-        this.boundActionCreators.loadListingsByEndpoint(endpoint)
-      }
-    })
+    window.addEventListener('scroll', this.infiniteScrolling)
+    
     // Event listener which maps the page width to the component's state.
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
@@ -69,6 +57,23 @@ class Listings extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions)
+    window.removeEventListener('scroll', this.infiniteScrolling)
+  }
+
+  infiniteScrolling(event) {
+    const { body } = event.srcElement || event.originalTarget
+    const bodyLargerThanView = body.offsetHeight > window.innerHeight
+    const closeToBottom = window.scrollY > (body.offsetHeight - (2 * window.innerHeight))
+    if (bodyLargerThanView && closeToBottom) {
+      const { pages } = this.props
+      const lastPage = pages[pages.length - 1]
+      const endpoint = listingsEndpoint(Object.assign({},
+        this.props.match.params,
+        parse(this.props.location.search),
+        { after: lastPage.after }
+      ))
+      this.boundActionCreators.loadListingsByEndpoint(endpoint)
+    }
   }
 
   updateWindowDimensions() {
@@ -124,8 +129,8 @@ const mapStateToProps = (state, ownProps) => {
   })
 
   // Finds the subreddit data if applicable.
-  const { subreddit } = ownProps.match.params
-  const subredditInfo = subreddit && subredditsInfo[subreddit.toLowerCase()]
+  const subreddit = ownProps.match.params.subreddit.toLowerCase()
+  const subredditInfo = subreddit && subredditsInfo[subreddit]
 
   return { isFetching, pageData, pages, subredditInfo }
 }

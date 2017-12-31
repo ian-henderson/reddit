@@ -13,17 +13,19 @@ const fetchListings = (endpoint, schema) => ({
 })
 
 export const loadListingsByEndpoint = endpoint => (dispatch, getState) => {
-  if (getState().pagination.listingsByEndpoint[endpoint.toLowerCase()]) return null
+  endpoint = endpoint.toLowerCase()
+  if (getState().pagination.listingsByEndpoint[endpoint]) return null
 
-  return dispatch(fetchListings(endpoint.toLowerCase(), Schemas.LISTINGS))
+  return dispatch(fetchListings(endpoint, Schemas.LISTINGS))
 }
 
 export const loadListingsByName = (prefix, names) => (dispatch, getState) => {
   const { listings } = getState().entities
 
   // Filters out listings that are already loaded.
-  const namesToLoad = names.filter(name =>
-    listings[name.toLowerCase()] ? null : name.toLowerCase())
+  const namesToLoad = names
+    .map(name => name.toLowerCase())
+    .filter(name => listings[name] ? null : name)
 
   // Exits if no listings need to be loaded.
   if (namesToLoad.length === 0) return null
