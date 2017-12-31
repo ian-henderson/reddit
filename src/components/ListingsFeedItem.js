@@ -26,28 +26,6 @@ const styles = {
   cardHeaderText: {
     padding: '0px'
   },
-  cardMediaRichContainer: {
-    padding: '2px 16px'
-  },
-  cardMediaRichImage: {
-    border: `0.5px solid ${grey300}`,
-    height: '125px',
-    maxHeight: '125px',
-    maxWidth: '125px',
-    objectFit: 'cover',
-    width: '125px'
-  },
-  cardMediaRichOverlayContainer: {
-    left: '1px',
-    bottom: '1px',
-    width: '127px'
-  },
-  cardMediaRichOverlayContent: {
-    padding: '0'
-  },
-  cardMediaVideoImage: {
-    objectFit: 'cover'
-  },
   cardText: {
     fontWeight: 'bold',
     padding: '0px 16px',
@@ -109,59 +87,16 @@ const numberFilter = value => {
   return number >= 1000 ? `${(number / 1000).toFixed(1)}k` : `${number}`
 }
 
-const ListingContent = props => {
-  /*
-  if (props.data.media && props.data.media.oembed) {
-    if (props.data.media.oembed.type === 'rich') {
-      return (
-        <div style={styles.flexContainer}>
-          <CardText style={styles.cardTextFlex}>{props.data.title}</CardText>
-          <div style={styles.cardMediaRichContainer}>
-            <CardMedia overlay={<CardText style={styles.cardTextCaption}>{props.data.domain}</CardText>}
-              overlayContainerStyle={styles.cardMediaRichOverlayContainer}
-              overlayContentStyle={styles.cardMediaRichOverlayContent}>
-              <img alt={props.data.title}
-                src={props.data.media.oembed.thumbnailUrl}
-                style={styles.cardMediaRichImage} />
-            </CardMedia>
-          </div>
-        </div>
-      )
-    }
-    // TODO: Instead of using the thumbnail url, an actual embedded iframe should be used.
-    if (props.data.media.oembed.type === 'video') {
-      return (
-        <div>
-          <CardText style={styles.cardText}>{props.data.title}</CardText>
-          <CardMedia>
-            <img alt={props.data.title}
-              src={props.data.media.oembed.thumbnailUrl}
-              style={styles.cardMediaVideoImage} />
-          </CardMedia>
-        </div>
-      )
-    }
-  }
-  */
-  // Basic Listing
-  return <CardText style={styles.cardText}>{props.data.title}</CardText>
-}
-
-const Subtitle = props => {
-  const timeAgo = moment.unix(props.data.createdUtc).fromNow()
-  return (
-    <div>
-      {props.isSubreddit
-        ? `u/${props.data.author}`
-        : <Link to={`/${props.data.subredditNamePrefixed}`} style={styles.subtitleLink}>
-            {props.data.subredditNamePrefixed}
-          </Link>
-      }
-      {` • ${timeAgo}`}
-      {!props.data.media && props.data.domain ? ` • ${props.data.domain}` : null}
-    </div>
-  )
-}
+const Subtitle = props =>
+  <div>
+    {props.isSubreddit
+      ? `u/${props.data.author}`
+      : <Link to={`/${props.data.subredditNamePrefixed}`} style={styles.subtitleLink}>
+          {props.data.subredditNamePrefixed}
+        </Link>}
+    {` • ${moment.unix(props.data.createdUtc).fromNow()}`}
+    {!props.data.media && props.data.domain ? ` • ${props.data.domain}` : null}
+  </div>
 
 const ListingsFeedItem = props =>
   <Card style={styles.card}>
@@ -173,7 +108,9 @@ const ListingsFeedItem = props =>
       textStyle={styles.cardHeaderText} />
     {/* Listing Title */}
     <Link to={props.data.permalink} style={styles.listingContentLink}>
-      <ListingContent data={props.data} />
+      <CardText style={styles.cardText}>
+        {props.data.title}
+      </CardText>
     </Link>
     <CardActions style={styles.cardActions}>
       <div style={styles.buttonSection}>

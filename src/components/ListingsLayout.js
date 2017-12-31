@@ -42,14 +42,19 @@ class ListingsLayout extends React.PureComponent {
   }
 
   render() {
-    /* Navbar Title & Header Tag */
+    const { subreddit } = this.props.match.params
+    const isSubreddit = subreddit && subreddit !== 'popular'
+    let headTitle = null
+    let navTitle = null
 
     // Home Case
-    let headTitle = 'reddit: the front page of the internet'
-    let navTitle = 'Home'
+    if (!subreddit) {
+      headTitle = 'reddit: the front page of the internet'
+      navTitle = 'Home'
+    }
 
     // Popular Case
-    if (this.props.match.params.subreddit === 'popular') {
+    if (subreddit === 'popular') {
       headTitle = 'popular links'
       navTitle = 'Popular'
     }
@@ -59,8 +64,6 @@ class ListingsLayout extends React.PureComponent {
       headTitle = this.props.subredditInfo.title
       navTitle = this.props.subredditInfo.displayNamePrefixed
     }
-
-    const isSubreddit = Boolean(this.props.match.params.subreddit)
 
     return (
       <div>
