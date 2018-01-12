@@ -9,26 +9,18 @@ import { loadListingsByName } from '../actions'
 class Listing extends React.Component {
   constructor(props) {
     super(props)
-    this.boundActionCreators = bindActionCreators(
-      { loadListingsByName }, 
-      props.dispatch
-    )
+    this.boundActionCreators = bindActionCreators({ loadListingsByName }, props.dispatch)
   }
 
   componentDidMount() {
     // Loads listing based on page parameters.
-    this.boundActionCreators.loadListingsByName(
-      't3_', 
-      [this.props.match.params.id]
-    )
+    this.boundActionCreators.loadListingsByName('t3_', [this.props.match.params.id])
   }
 
   render() {
-    const { listingData } = this.props
+    if (!this.props.listingData) return <Loading />
 
-    if (!listingData) return <Loading />
-
-    return <ListingLayout listingData={listingData} />
+    return <ListingLayout listingData={this.props.listingData} />
   }
 }
 

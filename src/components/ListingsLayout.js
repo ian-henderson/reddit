@@ -7,7 +7,7 @@ import ListingsFeed from '../components/ListingsFeed'
 import ListingsFeedToolbar from '../components/ListingsFeedToolbar'
 import PageOuterContainer from '../components/PageOuterContainer'
 import Nav from '../containers/Nav'
-import { listingsEndpoint } from '../utils'
+import { listingsEndpoint } from '../actions'
 
 class ListingsLayout extends React.PureComponent {
   constructor(props) {

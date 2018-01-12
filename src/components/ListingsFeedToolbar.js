@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import FontIcon from 'material-ui/FontIcon'
 import MenuItem from 'material-ui/MenuItem'
@@ -44,5 +45,10 @@ const ListingFeedToolbar = props =>
       </DropDownMenu>
     </ToolbarGroup>
   </Toolbar>
+
+ListingFeedToolbar.propTypes = {
+  handleSorting: PropTypes.func.isRequired,
+  sortingValue: PropTypes.string
+}
 
 export default ListingFeedToolbar

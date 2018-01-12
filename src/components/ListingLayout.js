@@ -9,20 +9,15 @@ import PageOuterContainer from './PageOuterContainer'
 
 class ListingLayout extends React.PureComponent {
   render() {
-    const { 
-      author, numComments, subredditNamePrefixed, score, title 
-    } = this.props.listingData
+    const { author, numComments, subredditNamePrefixed, score, title } = this.props.listingData
     return (
       <div>
         <Helmet><title>{title}</title></Helmet>
         <Nav title={subredditNamePrefixed} />
         <PageOuterContainer>
           <div style={{margin: 'auto', maxWidth: '588px'}}>
-            <Card style={{borderRadius: '0', boxShadow: '0', marginTop: '70px'}}>
-              <CardTitle 
-                title={title} 
-                subtitle={`u/${author}`}
-              />
+            <Card style={{borderRadius: '0', boxShadow: '0', marginTop: '60px'}}>
+              <CardTitle title={title} subtitle={`u/${author}`} />
               <Divider />
               <ListingButtons numComments={numComments} score={score} />
             </Card>

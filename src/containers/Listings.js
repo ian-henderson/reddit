@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { parse } from 'query-string'
 import { loadListingsByEndpoint, loadSubredditInfo } from '../actions'
 import ListingsLayout from '../components/ListingsLayout'
-import { listingsEndpoint } from '../utils'
+import { listingsEndpoint } from '../actions'
 
 class Listings extends React.Component {
   constructor(props) {

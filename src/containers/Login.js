@@ -6,26 +6,7 @@ import { parse } from 'query-string'
 import AppBar from 'material-ui/AppBar'
 import RaisedButton from 'material-ui/RaisedButton'
 import { initializeToken } from '../actions'
-import { randomString } from '../utils'
 import PageOuterContainer from '../components/PageOuterContainer'
-
-const styles = {
-  loginTitle: {
-    fontSize: '27px',
-    fontWeight: 'bold',
-    lineHeight: '32px',
-    marginBottom: '10px'
-  },
-  loginAppbar: {
-    position: 'fixed',
-    top: '0'
-  },
-  loginContainer: {
-    maxWidth: '588px', 
-    margin: 'auto',
-    padding: '24px'
-  }
-}
 
 const authorizationURL = width =>
   `https://www.reddit.com/api/v1/authorize` +
@@ -37,6 +18,24 @@ const authorizationURL = width =>
   `&duration=permanent` +
   `&scope=read`
 
+const randomString = length => {
+  let text = ''
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  for (let i = 0; i < length; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length))
+  }
+
+  return text
+}
+
+const styles = {
+  loginTitle: {
+    fontSize: '27px',
+    fontWeight: 'bold',
+    lineHeight: '32px',
+    marginBottom: '10px'
+  }
+}
 
 class Login extends React.Component {
   constructor(props) {
@@ -60,6 +59,7 @@ class Login extends React.Component {
     // Adds an event listener that updates the state on resize.
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
+
     // When redirected back to this page from reddit.com, this checks the auth
     // state for consistency and fetches an OAuth token.
     const { state, code, error } = parse(this.props.location.search)
@@ -93,11 +93,11 @@ class Login extends React.Component {
       <div>
         <AppBar
           title='Reddit'
-          style={styles.loginAppBar}
+          style={{position: 'fixed', top: '0'}}
           showMenuIconButton={false}
         />
         <PageOuterContainer>
-          <div style={styles.loginContainer}>
+          <div style={{margin: 'auto', maxWidth: '588px', padding: '24px'}}>
             <h1 style={styles.loginTitle}>Login</h1>
             <p>Connect to your reddit account.</p>
             <RaisedButton

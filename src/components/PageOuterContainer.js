@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const styles = {
   pageContainer: {
@@ -11,5 +12,9 @@ const PageOuterContainer = props =>
   <div style={styles.pageContainer}>
     {props.children}
   </div>
+
+PageOuterContainer.propTypes = {
+  children: PropTypes.object.isRequired
+}
 
 export default PageOuterContainer
