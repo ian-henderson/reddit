@@ -11,10 +11,12 @@ class Listings extends React.Component {
   constructor(props) {
     super(props)
     this.state = { height: 0, width: 0 }
-    this.boundActionCreators = bindActionCreators(
-      { loadListingsByEndpoint, loadSubredditInfo }, props.dispatch)
     this.infiniteScrolling = this.infiniteScrolling.bind(this)
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
+    this.boundActionCreators = bindActionCreators(
+      { loadListingsByEndpoint, loadSubredditInfo }, 
+      props.dispatch
+    )
   }
 
   componentDidMount() {
@@ -31,8 +33,12 @@ class Listings extends React.Component {
       this.boundActionCreators.loadSubredditInfo(subreddit)
     }
 
+    // Sets window dimensions & adds event listener.
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
+
+    // Sets infiniteScrolling event listener. Loads listings when 2 pages
+    // from bottom.
     window.addEventListener('scroll', this.infiniteScrolling)
   }
 
@@ -125,7 +131,10 @@ const mapStateToProps = (state, ownProps) => {
 
   // Finds the subreddit data if applicable.
   const { subreddit } = ownProps.match.params
-  const subredditInfo = subreddit && subredditsInfo[subreddit.toLowerCase()]
+  let subredditInfo = null
+  if (subreddit && subredditsInfo[subreddit.toLowerCase()]) {
+    subredditInfo = subredditsInfo[subreddit.toLowerCase()]
+  }
 
   return { isFetching, pageData, pages, subredditInfo }
 }

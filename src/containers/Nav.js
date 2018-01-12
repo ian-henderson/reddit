@@ -8,17 +8,6 @@ import { List, ListItem } from 'material-ui/List'
 import { grey300 } from 'material-ui/styles/colors'
 import { logOut } from '../actions'
 
-const styles = {
-  appBar: {
-    position: 'fixed',
-    top: '0px'
-  },
-  drawerAppBar: {
-    borderBottom: `1px solid ${grey300}`,
-    boxShadow: 'none'
-  }
-}
-
 class Nav extends React.Component {
   constructor(props) {
     super(props)
@@ -55,7 +44,7 @@ class Nav extends React.Component {
     return (
       <div>
         <AppBar
-          style={styles.appBar}
+          style={{position: 'fixed', top: '0'}}
           title={this.props.title}
           onLeftIconButtonTouchTap={this.handleToggle}
         />
@@ -66,7 +55,7 @@ class Nav extends React.Component {
           onRequestChange={open => this.setState({ open })}>
           <div>
             <AppBar
-              style={styles.drawerAppBar}
+              style={{borderBottom: `1px solid ${grey300}`, boxShadow: 'none'}}
               showMenuIconButton={false}
               title='Reddit'
               onLeftIconButtonTouchTap={this.handleToggle}

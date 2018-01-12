@@ -14,6 +14,7 @@ const fetchListings = (endpoint, schema) => ({
 
 export const loadListingsByEndpoint = endpoint => (dispatch, getState) => {
   endpoint = endpoint.toLowerCase()
+
   if (getState().pagination.listingsByEndpoint[endpoint]) return null
 
   return dispatch(fetchListings(endpoint, Schemas.LISTINGS))

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Helmet } from 'react-helmet'
 import { withRouter } from 'react-router-dom'
 import { parse } from 'query-string'
@@ -7,13 +8,6 @@ import ListingsFeedToolbar from '../components/ListingsFeedToolbar'
 import PageOuterContainer from '../components/PageOuterContainer'
 import Nav from '../containers/Nav'
 import { listingsEndpoint } from '../utils'
-
-const styles = {
-  feed: {
-    margin: 'auto',
-    maxWidth: '588px'
-  }
-}
 
 class ListingsLayout extends React.PureComponent {
   constructor(props) {
@@ -43,10 +37,9 @@ class ListingsLayout extends React.PureComponent {
 
   render() {
     const { subreddit } = this.props.match.params
-    const isSubreddit = subreddit && subreddit !== 'popular'
     let headTitle = null
     let navTitle = null
-
+    
     // Home Case
     if (!subreddit) {
       headTitle = 'reddit: the front page of the internet'
@@ -70,14 +63,14 @@ class ListingsLayout extends React.PureComponent {
         <Helmet><title>{headTitle}</title></Helmet>
         <Nav title={navTitle} />
         <PageOuterContainer>
-          <div style={styles.feed}>
+          <div style={{margin: 'auto', maxWidth: '588px'}}>
             <ListingsFeedToolbar 
               sortingValue={this.state.sorting} 
               handleSorting={this.handleSorting} 
             />
             <ListingsFeed
               isFetching={this.props.isFetching}
-              isSubreddit={isSubreddit}
+              isSubreddit={Boolean(subreddit)}
               pageData={this.props.pageData}
             />
           </div>
@@ -85,6 +78,12 @@ class ListingsLayout extends React.PureComponent {
       </div>
     )
   }
+}
+
+ListingsLayout.propTypes = {
+  isFetching: PropTypes.bool.isRequired,
+  pageData: PropTypes.array.isRequired,
+  subredditInfo: PropTypes.object
 }
 
 export default withRouter(ListingsLayout)

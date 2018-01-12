@@ -1,9 +1,9 @@
 import React from 'react'
-import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import ListingLayout from '../components/ListingLayout'
+import Loading from '../components/Loading'
 import { loadListingsByName } from '../actions'
 
 class Listing extends React.Component {
@@ -16,30 +16,28 @@ class Listing extends React.Component {
   }
 
   componentDidMount() {
-    this.boundActionCreators.loadListingsByName('t3_', [this.props.match.params.id])
+    // Loads listing based on page parameters.
+    this.boundActionCreators.loadListingsByName(
+      't3_', 
+      [this.props.match.params.id]
+    )
   }
 
   render() {
-    return (
-      <div>
-        <Helmet>
-          <title>
-            {this.props.listing 
-              ? this.props.listing.data.title
-              : 'r/' + this.props.match.params.subreddit}
-          </title>
-        </Helmet>
-        <ListingLayout data={this.props.listing} />
-      </div>
-    )
+    const { listingData } = this.props
+
+    if (!listingData) return <Loading />
+
+    return <ListingLayout listingData={listingData} />
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { entities: { listings }, auth: { isAuthenticated } } = state
-  const listing = listings[ownProps.match.params.id]
+  const { entities: { listings } } = state
+  const { id } = ownProps.match.params
+  const listingData = listings[id] && listings[id].data
 
-  return { isAuthenticated, listing }
+  return { listingData }
 }
 
 export default withRouter(connect(mapStateToProps)(Listing))
