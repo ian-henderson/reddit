@@ -37,6 +37,7 @@ class ListingsLayout extends React.PureComponent {
 
   render() {
     const { subreddit } = this.props.match.params
+    let isSubreddit = false
     let headTitle = null
     let navTitle = null
     
@@ -54,6 +55,7 @@ class ListingsLayout extends React.PureComponent {
 
     // Subreddit Case
     if (this.props.subredditInfo) {
+      isSubreddit = true
       headTitle = this.props.subredditInfo.title
       navTitle = this.props.subredditInfo.displayNamePrefixed
     }
@@ -70,7 +72,7 @@ class ListingsLayout extends React.PureComponent {
             />
             <ListingsFeed
               isFetching={this.props.isFetching}
-              isSubreddit={Boolean(subreddit)}
+              isSubreddit={isSubreddit}
               pageData={this.props.pageData}
             />
           </div>
