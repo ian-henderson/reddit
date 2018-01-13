@@ -42,7 +42,7 @@ const callApi = (endpoint, schema) => {
 const listingSchema = new schema.Entity('listings', {}, {
   idAttribute: listing => listing.data.id
 })
-const subredditInfoSchema = new schema.Entity('subredditsInfo', {}, {
+const subredditInfoSchema = new schema.Entity('subreddits', {}, {
   idAttribute: subreddit => subreddit.displayName.toLowerCase()
 })
 

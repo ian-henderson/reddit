@@ -4,8 +4,9 @@ import { withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
+import { ToolbarSeparator } from 'material-ui/Toolbar'
 import { List, ListItem } from 'material-ui/List'
-import { grey300 } from 'material-ui/styles/colors'
+import { grey300  } from 'material-ui/styles/colors'
 import { logOut } from '../actions'
 
 class Nav extends React.Component {
@@ -45,7 +46,13 @@ class Nav extends React.Component {
       <div>
         <AppBar
           style={{position: 'fixed', top: '0'}}
-          title={this.props.title}
+          title={
+            <div>
+              Reddit
+              <span style={{borderLeft: `1px solid ${grey300}`, margin: 'auto 25px'}} />
+              {this.props.title}
+            </div>
+          }
           onLeftIconButtonTouchTap={this.handleToggle}
         />
         <Drawer

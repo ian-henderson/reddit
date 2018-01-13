@@ -37,10 +37,7 @@ const paginate = ({ types, mapActionToKey }) => {
           ...state,
           after: action.response.result.data.after,
           before: action.response.result.data.before,
-          ids: union(
-            state.ids, 
-            action.response.result.data.children || [action.response.result.data]
-          ),
+          ids: union(state.ids, action.response.result.data.children),
           isFetching: false,
           kind: action.response.result.kind,
           pageCount: state.pageCount + 1

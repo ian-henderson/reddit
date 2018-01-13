@@ -17,9 +17,11 @@ class ListingLayout extends React.PureComponent {
         <PageOuterContainer>
           <div style={{margin: 'auto', maxWidth: '588px'}}>
             <Card style={{borderRadius: '0', boxShadow: '0', marginTop: '60px'}}>
+              <Divider />
               <CardTitle title={title} subtitle={`u/${author}`} />
               <Divider />
               <ListingButtons numComments={numComments} score={score} />
+              <Divider />
             </Card>
           </div>
         </PageOuterContainer>

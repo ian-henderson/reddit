@@ -58,10 +58,10 @@ export const initializeToken = code => dispatch => {
     code
   })
   .then(response => {
-    const camelizedJson = camelizeKeys(response.data)
+    const payload = camelizeKeys(response.data)
     localStorage.setItem('lastUpdated', Date.now() / 1000)
-    for (let i in camelizedJson) localStorage.setItem(i, camelizedJson[i])
-    dispatch({ type: FETCH_TOKEN_SUCCESS, payload: camelizedJson })
+    for (let i in payload) localStorage.setItem(i, payload[i])
+    dispatch({ type: FETCH_TOKEN_SUCCESS, payload })
   })
   .catch(error => {
     dispatch({ type: FETCH_TOKEN_FAILURE, error })

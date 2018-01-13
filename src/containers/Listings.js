@@ -97,7 +97,7 @@ class Listings extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   const {
     pagination: { listingsByEndpoint },
-    entities: { listings, subredditsInfo }
+    entities: { listings, subreddits }
   } = state
 
   // Populates pages array.
@@ -132,8 +132,8 @@ const mapStateToProps = (state, ownProps) => {
   // Finds the subreddit data if applicable.
   const { subreddit } = ownProps.match.params
   let subredditInfo = null
-  if (subreddit && subredditsInfo[subreddit.toLowerCase()]) {
-    subredditInfo = subredditsInfo[subreddit.toLowerCase()]
+  if (subreddit && subreddits[subreddit.toLowerCase()]) {
+    subredditInfo = subreddits[subreddit.toLowerCase()]
   }
 
   return { isFetching, pageData, pages, subredditInfo }
