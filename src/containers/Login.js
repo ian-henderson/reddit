@@ -16,7 +16,7 @@ const authorizationURL = width =>
   `&state=${localStorage.getItem('authState')}` +
   `&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}` +
   `&duration=permanent` +
-  `&scope=read`
+  `&scope=read vote`
 
 const randomString = length => {
   let text = ''

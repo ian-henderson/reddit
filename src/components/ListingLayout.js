@@ -9,7 +9,7 @@ import PageOuterContainer from './PageOuterContainer'
 
 class ListingLayout extends React.PureComponent {
   render() {
-    const { author, numComments, subredditNamePrefixed, score, title } = this.props.listingData
+    const { author, id, numComments, subredditNamePrefixed, score, title } = this.props.listingData
     return (
       <div>
         <Helmet><title>{title}</title></Helmet>
@@ -20,7 +20,11 @@ class ListingLayout extends React.PureComponent {
               <Divider />
               <CardTitle title={title} subtitle={`u/${author}`} />
               <Divider />
-              <ListingButtons numComments={numComments} score={score} />
+              <ListingButtons 
+                id={id}
+                numComments={numComments} 
+                score={score} 
+              />
               <Divider />
             </Card>
           </div>
@@ -33,6 +37,7 @@ class ListingLayout extends React.PureComponent {
 ListingLayout.propTypes = {
   listingData: PropTypes.shape({
     author: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     numComments: PropTypes.number.isRequired,
     subredditNamePrefixed: PropTypes.string.isRequired,
     score: PropTypes.number.isRequired,

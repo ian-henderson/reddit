@@ -19,7 +19,6 @@ class Listing extends React.Component {
 
   render() {
     if (!this.props.listingData) return <Loading />
-
     return <ListingLayout listingData={this.props.listingData} />
   }
 }

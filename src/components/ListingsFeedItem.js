@@ -63,6 +63,7 @@ const ListingsFeedItem = props =>
       </CardText>
     </Link>
     <ListingButtons 
+      id={props.data.id}
       numComments={props.data.numComments} 
       score={props.data.score} 
     />

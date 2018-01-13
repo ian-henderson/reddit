@@ -2,7 +2,7 @@ import axios from 'axios'
 import { camelizeKeys } from 'humps'
 import { normalize, schema } from 'normalizr'
 
-const callApi = (endpoint, schema) => {
+const callApi = (endpoint, schema, method) => {
   const accessToken = localStorage.getItem('accessToken')
 
   if (!accessToken) throw new Error('Error: No access token.')
@@ -10,6 +10,7 @@ const callApi = (endpoint, schema) => {
   const config = {
     baseURL: 'https://oauth.reddit.com',
     headers: { 'Authorization': `bearer ${accessToken}` },
+    method: method || 'GET',
     url: endpoint
   }
 
@@ -19,9 +20,9 @@ const callApi = (endpoint, schema) => {
         return Promise.reject(response)
       }
 
-      const camelizedJson = camelizeKeys(response.data)
-
-      return Object.assign({}, normalize(camelizedJson, schema))
+      const data = camelizeKeys(response.data)
+      
+      return Object.assign({}, normalize(data, schema))
     })
     .catch(error => { throw error })
 }
@@ -49,7 +50,8 @@ const subredditInfoSchema = new schema.Entity('subreddits', {}, {
 // Schemas for Reddit API responses.
 export const Schemas = {
   LISTINGS: { data: { children: [listingSchema] } },
-  SUBREDDIT_INFO: { data: subredditInfoSchema }
+  SUBREDDIT_INFO: { data: subredditInfoSchema },
+  VOTE: {}
 }
 
 // Action key that carries API call info interpreted by this Redux middleware.
@@ -62,7 +64,7 @@ export default store => next => action => {
   if (typeof callAPI === 'undefined') return next(action)
 
   let { endpoint } = callAPI
-  const { schema, types } = callAPI
+  const { method, schema, types } = callAPI
 
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState())
@@ -89,7 +91,7 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types
   next(actionWith({ type: requestType, endpoint }))
 
-  return callApi(endpoint, schema).then(
+  return callApi(endpoint, schema, method).then(
     response => next(actionWith({
       type: successType,
       response,
