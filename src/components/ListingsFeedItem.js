@@ -15,11 +15,13 @@ const Subtitle = props =>
           style={{color: 'inherit', fontWeight: 'bold', textDecoration: 'none'}}
         >
           {props.data.subredditNamePrefixed}
-        </Link>}
+        </Link>
+    }
     {` • ${moment.unix(props.data.createdUtc).fromNow()}`}
     {!props.data.media && props.data.domain 
       ? ` • ${props.data.domain}` 
-      : null}
+      : null
+    }
   </div>
 
 Subtitle.propTypes = {
@@ -63,18 +65,15 @@ const ListingsFeedItem = props =>
       </CardText>
     </Link>
     <ListingButtons 
-      id={props.data.id}
+      likes={props.data.likes}
+      name={props.data.name}
       numComments={props.data.numComments} 
       score={props.data.score} 
     />
   </Card>
 
 ListingsFeedItem.propTypes = {
-  data: PropTypes.shape({
-    author: PropTypes.string.isRequired,
-    subredditNamePrefixed: PropTypes.string.isRequired,
-    createdUtc: PropTypes.number.isRequired
-  }).isRequired,
+  data: PropTypes.object.isRequired,
   isSubreddit: PropTypes.bool.isRequired
 }
 

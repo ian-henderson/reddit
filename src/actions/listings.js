@@ -23,9 +23,9 @@ export const LISTINGS_FAILURE = 'LISTINGS_FAILURE'
 
 const fetchListings = (endpoint, schema) => ({
   [CALL_API]: {
-    types: [LISTINGS_REQUEST, LISTINGS_SUCCESS, LISTINGS_FAILURE],
     endpoint,
-    schema
+    schema,
+    types: [LISTINGS_REQUEST, LISTINGS_SUCCESS, LISTINGS_FAILURE]
   }
 })
 
@@ -37,22 +37,21 @@ export const loadListingsByEndpoint = endpoint => (dispatch, getState) => {
   return dispatch(fetchListings(endpoint, Schemas.LISTINGS))
 }
 
-export const loadListingsByName = (prefix, names) => (dispatch, getState) => {
+export const loadListingsByName = ids => (dispatch, getState) => {
   const { listings } = getState().entities
 
   // Filters out listings that are already loaded.
-  const namesToLoad = names
-    .map(name => name.toLowerCase())
+  const namesToLoad = ids
+    .map(id => 't3_' + id.toLowerCase())
     .filter(name => listings[name] ? null : name)
 
   // Exits if no listings need to be loaded.
   if (namesToLoad.length === 0) return null
 
-  // Constructs an endpoint using the listing names.
+  // Constructs an endpoint using the listing ids.
   const endpoint = '/by_id/' + namesToLoad.map((name, index) => {
-    let id = prefix + name
-    if (index !== namesToLoad.length - 1) id += ','
-    return id
+    if (index !== namesToLoad.length - 1) name += ','
+    return name
   })
 
   return dispatch(fetchListings(endpoint, Schemas.LISTINGS))

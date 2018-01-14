@@ -41,7 +41,7 @@ const callApi = (endpoint, schema, method) => {
 // That's why we're forcing lower cases down there.
 
 const listingSchema = new schema.Entity('listings', {}, {
-  idAttribute: listing => listing.data.id
+  idAttribute: listing => listing.data.name
 })
 const subredditInfoSchema = new schema.Entity('subreddits', {}, {
   idAttribute: subreddit => subreddit.displayName.toLowerCase()

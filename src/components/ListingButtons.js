@@ -6,7 +6,7 @@ import { CardActions } from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
 import FontIcon from 'material-ui/FontIcon'
 import { grey600, white } from 'material-ui/styles/colors'
-import { initializeVote } from '../actions'
+import { handleVote } from '../actions'
 
 const fontIcon = name =>
   <FontIcon className='material-icons' style={{fontSize: '10pt'}}>
@@ -17,6 +17,21 @@ const numberFilter = number =>
   number >= 1000 
     ? `${(number / 1000).toFixed(1)}k` 
     : `${number}`
+
+const voteButtonStyle = (likes, direction) => {
+  let color = grey600
+  if (direction === 1 && likes === true) {
+    color = 'orangered'
+  } else if (direction === -1 && likes === false) {
+    color = '#9698FC'
+  }
+
+  return {
+    color,
+    fontSize: '10pt',
+    minWidth: '30px'
+  }
+}
 
 const styles = {
   voteButton: {
@@ -34,7 +49,7 @@ const styles = {
 class ListingButtons extends React.PureComponent {
   constructor(props) {
     super(props)
-    this.boundActionCreators = bindActionCreators({ initializeVote }, props.dispatch)
+    this.boundActionCreators = bindActionCreators({ handleVote }, props.dispatch)
   }
 
   render() {
@@ -46,17 +61,17 @@ class ListingButtons extends React.PureComponent {
             disableTouchRipple={true}
             hoverColor={white}
             icon={fontIcon('arrow_upward')}
-            onClick={() => this.boundActionCreators.initializeVote(1, 't3_' + this.props.id)}
+            onClick={() => this.boundActionCreators.handleVote(1, this.props.name)}
             label={this.props.score > 1 ? numberFilter(this.props.score) : 'Vote'}
             labelStyle={styles.voteButtonText}
-            style={styles.voteButton}
+            style={voteButtonStyle(this.props.likes, 1)}
           />
           <FlatButton
             disableTouchRipple={true}
             hoverColor={white}
             icon={fontIcon('arrow_downward')}
-            onClick={() => this.boundActionCreators.initializeVote(-1, 't3_' + this.props.id)}
-            style={styles.voteButton}
+            onClick={() => this.boundActionCreators.handleVote(-1, this.props.name)}
+            style={voteButtonStyle(this.props.likes, -1)}
           />
         </div>
         <div style={{display: 'inline-block'}}>
@@ -76,7 +91,8 @@ class ListingButtons extends React.PureComponent {
 }
 
 ListingButtons.propTypes = {
-  id: PropTypes.string.isRequired,
+  likes: PropTypes.bool,
+  name: PropTypes.string.isRequired,
   numComments: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired
 }

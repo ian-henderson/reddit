@@ -8,9 +8,11 @@ import rootReducer from '../reducers'
 const composeEnhancers = composeWithDevTools({})
 
 const configureStore = preloadedState => {
-  const store = createStore(rootReducer, preloadedState, composeEnhancers(
-    applyMiddleware(token, thunk, api)
-  ))
+  const store = createStore(
+    rootReducer, 
+    preloadedState, 
+    composeEnhancers(applyMiddleware(token, thunk, api))
+  )
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers

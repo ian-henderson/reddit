@@ -14,7 +14,7 @@ class Listing extends React.Component {
 
   componentDidMount() {
     // Loads listing based on page parameters.
-    this.boundActionCreators.loadListingsByName('t3_', [this.props.match.params.id])
+    this.boundActionCreators.loadListingsByName([this.props.match.params.id])
   }
 
   render() {
@@ -25,8 +25,8 @@ class Listing extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   const { entities: { listings } } = state
-  const { id } = ownProps.match.params
-  const listingData = listings[id] && listings[id].data
+  const name = 't3_' + ownProps.match.params.id
+  const listingData = listings[name] && listings[name].data
 
   return { listingData }
 }
