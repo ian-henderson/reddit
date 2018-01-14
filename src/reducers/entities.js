@@ -12,13 +12,16 @@ const entities = (state = { listings: {}, subreddits: {} }, action) => {
   if (action.type === ActionTypes.VOTE_REQUEST) {
     const queryString = action.endpoint.split('?')[1]
     const { id, dir } = parse(queryString)
-    const entities = { listings: {} }
     let likes = null
     if (Number(dir) === 1) likes = true
     else if (Number(dir) === -1) likes = false
-    entities.listings[id] = { data: { likes } }
+    const stateToUpdate = { 
+      listings: { 
+        [id]: { data: { likes } } 
+      } 
+    }
 
-    return merge({}, state, entities)
+    return merge({}, state, stateToUpdate)
   }
 
   return state
