@@ -20,6 +20,7 @@ const styles = {
     cursor: 'pointer',
     display: 'inline-block', 
     fontSize: '10pt', 
+    fontWeight: '500',
     height: '24px', 
     padding: '0', 
     verticalAlign: 'top', 
