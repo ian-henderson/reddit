@@ -52,7 +52,7 @@ class Nav extends React.Component {
               {this.props.title}
             </div>
           }
-          onLeftIconButtonTouchTap={this.handleToggle}
+          onLeftIconButtonClick={this.handleToggle}
         />
         <Drawer
           docked={false}
@@ -64,7 +64,7 @@ class Nav extends React.Component {
               style={{borderBottom: `1px solid ${grey300}`, boxShadow: 'none'}}
               showMenuIconButton={false}
               title='Reddit'
-              onLeftIconButtonTouchTap={this.handleToggle}
+              onLeftIconButtonClick={this.handleToggle}
             />
             <List>
               <ListItem primaryText='Home' onClick={() => this.goTo('/')} />

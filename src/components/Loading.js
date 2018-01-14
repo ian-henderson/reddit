@@ -20,8 +20,8 @@ const Loading = () =>
     <Divider />
     <CircularProgress
       style={styles.circularProgress}
-      size={25}
-      thickness={3.0}
+      size={20}
+      thickness={2.5}
     />
     <Divider />
   </Card>
