@@ -28,7 +28,7 @@ const styles = {
   },
   voteIconButton: {
     height: '24px', 
-    margin: '0 8px', 
+    margin: '0 4px', 
     padding: '0', 
     width: '24px'
   }
