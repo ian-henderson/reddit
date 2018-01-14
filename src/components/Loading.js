@@ -1,7 +1,6 @@
 import React from 'react'
 import Card from 'material-ui/Card'
 import CircularProgress from 'material-ui/CircularProgress'
-import Divider from 'material-ui/Divider'
 
 const styles = {
   card: {
@@ -17,13 +16,11 @@ const styles = {
 
 const Loading = () =>
   <Card style={styles.card}>
-    <Divider />
     <CircularProgress
       style={styles.circularProgress}
       size={20}
       thickness={2.5}
     />
-    <Divider />
   </Card>
 
 export default Loading

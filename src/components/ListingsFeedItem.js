@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import Card, { CardHeader, CardText } from 'material-ui/Card'
+import { grey300 } from 'material-ui/styles/colors'
 import ListingButtons from './ListingButtons'
 
 // TODO: Find a way around using isSubreddit
@@ -26,8 +27,18 @@ Subtitle.propTypes = {
   isSubreddit: PropTypes.bool.isRequired
 }
 
+const styles = {
+  feedItem: {
+    borderLeft: `1px solid ${grey300}`, 
+    borderRight: `1px solid ${grey300}`, 
+    borderTop: `1px solid ${grey300}`, 
+    borderRadius: '0', 
+    boxShadow: '0'
+  }
+}
+
 const ListingsFeedItem = props =>
-  <Card style={{borderRadius: '0', boxShadow: '0'}}>
+  <Card style={styles.feedItem}>
     {/* Header */}
     <CardHeader
       style={{padding: '10px 16px 2px'}}
