@@ -15,13 +15,13 @@ const entities = (state = { listings: {}, subreddits: {} }, action) => {
     let likes = null
     if (Number(dir) === 1) likes = true
     else if (Number(dir) === -1) likes = false
-    const stateToUpdate = { 
+    const updatedState = { 
       listings: { 
         [id]: { data: { likes } } 
       } 
     }
 
-    return merge({}, state, stateToUpdate)
+    return merge({}, state, updatedState)
   }
 
   return state
