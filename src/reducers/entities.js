@@ -14,11 +14,8 @@ const entities = (state = { listings: {}, subreddits: {} }, action) => {
     const { id, dir } = parse(queryString)
     const entities = { listings: {} }
     let likes = null
-    if (Number(dir) === 1) {
-      likes = true
-    } else if (Number(dir) === -1) {
-      likes = false
-    }
+    if (Number(dir) === 1) likes = true
+    else if (Number(dir) === -1) likes = false
     entities.listings[id] = { data: { likes } }
 
     return merge({}, state, entities)

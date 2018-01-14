@@ -9,6 +9,6 @@ export default getMuiTheme({
   },
   palette: {
     primary1Color: grey600,
-    accent1Color: '#FF4500'
+    accent1Color: 'orangered'
   }
 })

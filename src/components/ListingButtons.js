@@ -13,11 +13,6 @@ const fontIcon = name =>
     {name}
   </FontIcon>
 
-const numberFilter = number =>
-  number >= 1000 
-    ? `${(number / 1000).toFixed(1)}k` 
-    : `${number}`
-
 const voteButtonStyle = (likes, direction) => {
   let color = grey600
   if (direction === 1 && likes === true) {
@@ -50,6 +45,21 @@ class ListingButtons extends React.PureComponent {
   constructor(props) {
     super(props)
     this.boundActionCreators = bindActionCreators({ handleVote }, props.dispatch)
+    this.numberFilter = this.numberFilter.bind(this)
+    this.scoreFilter = this.scoreFilter.bind(this)
+  }
+
+  numberFilter(number) {
+    if (number >= 1000) return `${(number / 1000).toFixed(1)}k`
+
+    return String(number)
+  }
+
+  scoreFilter(score) {
+    if (this.props.likes === true) score++
+    else if (this.props.likes === false) score--
+
+    return this.numberFilter(score)
   }
 
   render() {
@@ -62,7 +72,7 @@ class ListingButtons extends React.PureComponent {
             hoverColor={white}
             icon={fontIcon('arrow_upward')}
             onClick={() => this.boundActionCreators.handleVote(1, this.props.name)}
-            label={this.props.score > 1 ? numberFilter(this.props.score) : 'Vote'}
+            label={this.scoreFilter(this.props.score)}
             labelStyle={styles.voteButtonText}
             style={voteButtonStyle(this.props.likes, 1)}
           />
@@ -80,7 +90,7 @@ class ListingButtons extends React.PureComponent {
             disableTouchRipple
             hoverColor={white}
             icon={fontIcon('comment')}
-            label={this.props.numComments > 0 ? numberFilter(this.props.numComments) : 'Comment'}
+            label={this.numberFilter(this.props.numComments)}
             labelStyle={{fontSize: '10pt', textTransform: 'none'}}
             style={{color: grey600}}
           />
