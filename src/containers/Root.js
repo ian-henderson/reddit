@@ -2,16 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import Reboot from 'material-ui/Reboot'
+import { MuiThemeProvider } from 'material-ui/styles'
 import Listing from './Listing'
 import Listings from './Listings'
 import Login from './Login'
-import theme from '../theme'
 import ProtectedRoute from './ProtectedRoute'
 
 const Root = ({ store }) =>
   <Provider store={store}>
-    <MuiThemeProvider muiTheme={theme}>
+    <MuiThemeProvider>
+      <Reboot />
       <Switch>
         <Route path="/login" component={Login} />
         <ProtectedRoute exact path="/" component={Listings} />

@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { parse } from 'query-string'
 import { loadListingsByEndpoint, loadSubredditInfo } from '../actions'
-import ListingsLayout from '../components/ListingsLayout'
+import ListingsPage from '../components/ListingsPage'
 import { listingsEndpoint } from '../actions'
 
 class Listings extends React.Component {
@@ -85,7 +85,7 @@ class Listings extends React.Component {
 
   render() {
     return (
-      <ListingsLayout
+      <ListingsPage
         isFetching={this.props.isFetching}
         pageData={this.props.pageData}
         subredditInfo={this.props.subredditInfo}

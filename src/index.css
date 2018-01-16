@@ -1,6 +1,5 @@
-body {
-  background: #E6ECF0;
-  margin: 0;
-  padding: 0;
+#root {
+  background-color: #FAFAFA;
   font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
 }

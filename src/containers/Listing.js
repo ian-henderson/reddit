@@ -2,8 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
-import ListingLayout from '../components/ListingLayout'
-import Loading from '../components/Loading'
 import { loadListingsByName } from '../actions'
 
 class Listing extends React.Component {
@@ -18,8 +16,8 @@ class Listing extends React.Component {
   }
 
   render() {
-    if (!this.props.listingData) return <Loading />
-    return <ListingLayout listingData={this.props.listingData} />
+    if (!this.props.listingData) return <div>Loading</div>
+    return <div listingData={this.props.listingData} />
   }
 }
 
