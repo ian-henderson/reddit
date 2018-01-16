@@ -32,14 +32,6 @@ class Nav extends React.Component {
     this.boundActionCreators.logOut()
   }
 
-  componentDidMount() {
-    if (!this.props.isAuthenticated) this.props.history.push('/login')
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (!nextProps.isAuthenticated) this.props.history.push('/login')
-  }
-
   render() {
     return (
       <div>
@@ -78,6 +70,4 @@ class Nav extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({ isAuthenticated: state.auth.isAuthenticated })
-
-export default withRouter(connect(mapStateToProps)(Nav))
+export default withRouter(connect()(Nav))
