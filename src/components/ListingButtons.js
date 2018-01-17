@@ -120,6 +120,7 @@ class ListingButtons extends React.PureComponent {
           />
         </div>
         <span style={{borderLeft: `1px solid ${grey300}`}} />
+        {/*
         <div style={styles.buttonSection}>
           <FlatButton
             href={`https://reddit.com${this.props.permalink}`}
@@ -130,6 +131,7 @@ class ListingButtons extends React.PureComponent {
             style={{color: grey600, display: 'inline-block'}}
           />
         </div>
+        */}
       </CardActions>
     )
   }

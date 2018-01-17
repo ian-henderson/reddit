@@ -46,12 +46,13 @@ const ListingsFeedItem = props =>
       textStyle={{padding: '0px'}}
     />
     {/* Listing Title */}
-    <Link 
-      to={props.data.permalink} 
-      style={{color: 'inherit', textDecoration: 'none'}}
+    <a 
+      href={`https://reddit.com${props.data.permalink}`} 
+      target="_blank" 
+      style={{textDecoration: "none"}}
     >
       <CardText style={{padding: '4px 16px'}}>{props.data.title}</CardText>
-    </Link>
+    </a>
     <ListingButtons 
       likes={props.data.likes}
       name={props.data.name}
