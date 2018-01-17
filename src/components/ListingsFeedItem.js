@@ -56,6 +56,7 @@ const ListingsFeedItem = props =>
       likes={props.data.likes}
       name={props.data.name}
       numComments={props.data.numComments} 
+      permalink={props.data.permalink}
       score={props.data.score} 
     />
   </Card>

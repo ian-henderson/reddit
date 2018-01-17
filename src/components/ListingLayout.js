@@ -46,6 +46,7 @@ class ListingLayout extends React.PureComponent {
                 likes={listingData.likes}
                 name={listingData.name}
                 numComments={listingData.numComments} 
+                permalink={listingData.permalink}
                 score={listingData.score} 
               />
               <Divider />

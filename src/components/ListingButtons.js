@@ -14,7 +14,7 @@ const styles = {
     display: 'inline-block', 
     margin: '0', 
     textAlign: 'center', 
-    width: '33%'
+    width: '32%'
   },
   scoreText: {
     cursor: 'pointer',
@@ -120,6 +120,16 @@ class ListingButtons extends React.PureComponent {
           />
         </div>
         <span style={{borderLeft: `1px solid ${grey300}`}} />
+        <div style={styles.buttonSection}>
+          <FlatButton
+            href={`https://reddit.com${this.props.permalink}`}
+            hoverColor={white}
+            label="Source"
+            labelStyle={{fontSize: '10pt', textTransform: 'none'}}
+            target="_blank"
+            style={{color: grey600, display: 'inline-block'}}
+          />
+        </div>
       </CardActions>
     )
   }
@@ -129,6 +139,7 @@ ListingButtons.propTypes = {
   likes: PropTypes.bool,
   name: PropTypes.string.isRequired,
   numComments: PropTypes.number.isRequired,
+  permalink: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired
 }
 
